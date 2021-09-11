@@ -1,25 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './index.css'
+import {ThemeProvider,createTheme} from '@material-ui/core/styles';
+import {CssBaseline} from '@material-ui/core';
+//@ts-ignore
+import AdobeClean from './fonts/AdobeClean/AdobeClean-Regular.woff' ;
+
+
+import {CustomCheckbox} from './Components/CustomCheckbox'
+import { Tag } from './Components/Tag';
+import { TextBox } from './Components/TextBox';
+import { CustomButton } from './Components/CustomButton';
+import { LandingPage } from './Pages/LandingPage';
+const theme = createTheme({
+  typography: {
+    fontFamily: 'AdobeClean, Arial',
+  },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [AdobeClean],
+      },
+    },
+  },
+});
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+       <CssBaseline />
+       <CustomCheckbox/>
+       <Tag color='#d2ceff'/>
+       <TextBox/>
+       <CustomButton/>
+       <LandingPage/>
+    </ThemeProvider>
   );
 }
 
