@@ -1,11 +1,12 @@
-import { AppBar, Toolbar, Typography, IconButton, Drawer, Grid, Box ,PaperProps} from '@material-ui/core';
+import { AppBar, Toolbar, Typography, IconButton, Drawer, Grid, Box, PaperProps, Theme, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles'
 import AddIcon from '@material-ui/icons/Add';
 import { Navbar } from '../Components/Navbar';
 import { Categories } from '../Components/Categories';
 import { CustomCheckbox } from '../Components/CustomCheckbox';
+import { Todo } from '../Components/Todo';
 const drawerWidth = 350;
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
     root: {
 
     },
@@ -28,16 +29,22 @@ const useStyles = makeStyles((theme) => ({
     content: {
         marginLeft: `${drawerWidth}px`,
         width: `calc(100% - ${drawerWidth}px)`,
-        backgroundColor: 'red'
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+            marginLeft: '0px'
+        }
     },
     sidebarContent: {
-       
+
     },
-    paperAnchorDockedRight:{
-        borderRight:0
+    paperAnchorDockedLeft: {
+        borderRight: 0,
+        padding: theme.spacing(2),
+        width: `${drawerWidth}px`,
     },
-    sidebar:{
-        width:  `${drawerWidth}px`,
+    sidebar: {
+
+
     }
 }));
 interface DashboardProps {
@@ -48,24 +55,50 @@ export const Dashboard: React.FC<DashboardProps> = ({ categories }) => {
     return (
         <>
             <Navbar />
-            <Box className={classes.sidebar}>
-            <Drawer open={true} anchor='left' variant='permanent' elevation={0} classes={{paperAnchorDockedRight:classes.paperAnchorDockedRight}} >
-                <Toolbar />
-                <Toolbar />
-              
-                <Grid container direction='column' spacing={2} justifyContent='center' className={classes.sidebar}>
-                    <Grid item><Categories categories={categories} /></Grid>
-                    <Grid item><CustomCheckbox /></Grid>
-                </Grid>
-                
+            <Hidden smDown>
+                <Box className={classes.sidebar}>
+                    <Drawer open={true} anchor='left' variant='permanent' elevation={0} classes={{ paperAnchorDockedLeft: classes.paperAnchorDockedLeft }} >
+                        <Toolbar />
+                        <Toolbar />
 
-            </Drawer>
-            </Box>
-            <Box className={classes.content}>
+                        <Grid container direction='column' spacing={2} justifyContent='center' className={classes.sidebar}>
+
+                            {categories.map(({ color, type }, i) => (
+
+                                <Grid item key={i}>
+                                    <Categories color={color} type={type} />
+                                </Grid>
+
+                            ))
+                            }
+                       <Grid item><CustomCheckbox /></Grid>
+                        </Grid>
+
+
+                    </Drawer>
+                </Box>
+            </Hidden>
+            <Hidden mdUp>
                 <Toolbar />
-                <div>akgbdskagljgbnbmbkhkhik</div>
+                <Grid container direction='row' style={{margin:'20px'}}>
+                    {categories.map(({ color, type }, i) => (
+
+                        <Grid item key={i} >
+                            <Categories color={color} type={type} />
+                        </Grid>
+
+                    ))
+                    }
+                </Grid>
+
+            </Hidden>
+            <Hidden smDown>
+            <Toolbar />
+            </Hidden>
+            <Box className={classes.content}>
+                <Todo />
             </Box>
-           
+
         </>
 
     )

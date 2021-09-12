@@ -3,20 +3,19 @@ import { Tag } from "./Tag";
 import {Typography,Grid} from '@material-ui/core'
 
 interface CategoriesProps{
-    categories:{type:string,color:string}[]
+  type:string,
+  color:string
 }
-export const Categories:React.FC<CategoriesProps>=({categories})=>{
+export const Categories:React.FC<CategoriesProps>=({type,color})=>{
    
     return(
         <>
-            {categories.map(({color,type})=>(
-            <>
-            <Grid container spacing={1} style={{padding:'10px'}}>
+        
+            <Grid container spacing={1} style={{padding:'10px'}} >
                 <Grid item> <Tag color={color} /> </Grid>
                 <Grid item><Typography>{type}</Typography></Grid>
             </Grid>
-         </>
-            ))}     
+       
         </>
     )
 }
