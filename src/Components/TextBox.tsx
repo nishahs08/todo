@@ -15,11 +15,17 @@ const useStyles=makeStyles({
        fontWeight:400
      } 
 })
-export const TextBox = () => {
+
+interface TextBoxProps{
+    label:string,
+
+
+}
+export const TextBox :React.FC<TextBoxProps>= ({label}) => {
    const classes=useStyles();
     return (
         <>
-            <InputLabel className={classes.label}>Text Box</InputLabel>
+            <InputLabel className={classes.label}>{label}</InputLabel>
             <TextField className={classes.root} variant='outlined' fullWidth placeholder='placeholder' InputProps={{classes:{notchedOutline:classes.noBorder}}}></TextField>
         </>
     )
