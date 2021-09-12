@@ -3,18 +3,10 @@ import {makeStyles} from '@material-ui/styles'
 import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme:Theme) => ({
-    root: {
-   
-    },
-   addButton: {
-       
-    },
     toolbar: {
       justifyContent: 'space-between'
     },
-    title: {
-  
-    },
+
     appbar:{
         backgroundColor:'#fff',
    zIndex: theme.zIndex.drawer + 1,
@@ -25,14 +17,18 @@ const useStyles = makeStyles((theme:Theme) => ({
     }
   }));
   
-export const Navbar = () => {
+  interface NavbarProps{
+ open :boolean,
+ setOpen:(value:boolean)=>void
+  }
+export const Navbar :React.FC<NavbarProps> = ({open,setOpen}) => {
     const classes = useStyles();
     return (
      
         <AppBar position="fixed"  elevation={0} className={classes.appbar}>
             <Toolbar className={classes.toolbar}>
                 <Typography className={classes.logo}>todo</Typography>
-                <IconButton  className={classes.addButton}>
+                <IconButton onClick={()=>setOpen(!open)} >
                     <AddIcon color='inherit' fontSize="large" />
                 </IconButton>
             </Toolbar>

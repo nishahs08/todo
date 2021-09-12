@@ -20,12 +20,17 @@ const useStyles = makeStyles({
         color:'#69665C',
     }
 })
-export const CustomCheckbox = () => {
-    const [value, setValue] = useState<boolean>(false);
+interface CustomCheckbox{
+    label:string,
+    checked:boolean,
+    setChecked:(value:boolean)=>void
+}
+export const CustomCheckbox :React.FC<CustomCheckbox> = ({label,checked,setChecked}) => {
+    
     const classes = useStyles();
     return (
         <FormControlLabel
-            className={value ? classes.checkedLabel : classes.label}
+            className={checked ? classes.checkedLabel : classes.label}
             control={<Checkbox
                 classes={{
                     root: classes.root,
@@ -33,13 +38,13 @@ export const CustomCheckbox = () => {
                 }}
                 disableFocusRipple
                 disableRipple
-                checked={value}
-                onChange={() => setValue(!value)}
+                checked={checked}
+                onChange={() => setChecked(!checked)}
                 name="Something"
                 color='default'
                 checkedIcon={<CheckBoxIcon />}
             />}
-            label="Secondary"
+            label={label}
         />
     )
 }

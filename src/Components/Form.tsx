@@ -1,7 +1,10 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography,Hidden } from "@material-ui/core";
 import { CustomButton } from "./CustomButton";
 import { TextBox } from "./TextBox";
 import { Tag } from "./Tag";
+import { Categories } from "./Categories";
+import { category,categoryType } from "../types";
+import { useState } from "react";
 
 const TagsWithLabel=()=>{
     return(
@@ -11,16 +14,21 @@ const TagsWithLabel=()=>{
         </Grid>
     )
 }
-export const Form = () => {
+interface FormProps{
+  cancel:()=>void,
+  categories:category[]
+}
+export const Form :React.FC<FormProps>= ({cancel,categories}) => {
+  const [activeCategory, setActiveCategory] = useState<categoryType>('all');
   return (
-    <Grid container direction="column">
-      <Grid item>
+    <Grid container direction="column" spacing={2} >
+      <Grid item >
           <Grid container justifyContent='space-between'>
               <Grid item>
-              <CustomButton label="Cancel"/>
+              <CustomButton label="Cancel" onClick={()=>cancel()}/>
               </Grid>
               <Grid item>
-              <CustomButton label="Add"/>
+              <CustomButton label="Add" onClick={()=>cancel()}/>
               </Grid>
           </Grid>
       </Grid>
@@ -37,12 +45,35 @@ export const Form = () => {
           </Grid>
           <Grid item >
          
-        <Grid container direction='row'>
+        {/* <Grid container direction='row'>
             <Grid item style={{marginRight:'10px'}}><TagsWithLabel/></Grid>
               <Grid item style={{marginRight:'10px'}}><TagsWithLabel/></Grid>
               <Grid item style={{marginRight:'10px'}}><TagsWithLabel/></Grid>
               <Grid item style={{marginRight:'10px'}}><TagsWithLabel/></Grid>
+        </Grid> */}
+            <Hidden smDown>
+            <Grid container >
+          {categories.map(({ color, type }, i) => (
+								<Grid item key={i}>
+									<Categories color={color} type={type} setActiveState={setActiveCategory} />
+								</Grid>
+							))
+							}
+       
         </Grid>
+            </Hidden>
+       
+        <Hidden mdUp >
+        <Grid container direction="column">
+          {categories.map(({ color, type }, i) => (
+								<Grid item key={i}>
+									<Categories color={color} type={type} setActiveState={setActiveCategory} />
+								</Grid>
+							))
+							}
+       
+        </Grid>
+        </Hidden>
           </Grid>
         </Grid>
       </Grid>
