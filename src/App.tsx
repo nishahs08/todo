@@ -12,6 +12,8 @@ import { CustomButton } from "./Components/CustomButton";
 import { LandingPage } from "./Pages/LandingPage";
 import { Form } from "./Components/Form";
 import {Todo} from "./Components/Todo"
+import { Categories } from "./Components/Categories";
+import { Dashboard } from "./Pages/Dashboard";
 const theme = createTheme({
   typography: {
     fontFamily: "AdobeClean, Arial",
@@ -24,6 +26,14 @@ const theme = createTheme({
     },
   },
 });
+
+const categories = [
+  { type: "work", color: "#d2ceff" },
+  { type: "study", color: "#d1e5f7" },
+  { type: "entertainment", color: "#ffcece" },
+  { type: "family", color: "#daf2d6" },
+];
+
 
 const Container = styled(Box)({
   position: "absolute",
@@ -45,7 +55,9 @@ function App() {
         <Form/>
 
       </Container> */}
-      <Todo/>
+      <Dashboard categories={categories}/>
+      {/* <Todo/>
+      <Categories categories={categories}/> */}
     </ThemeProvider>
   );
 }

@@ -3,13 +3,6 @@ import { CustomButton } from "./CustomButton";
 import { TextBox } from "./TextBox";
 import { Tag } from "./Tag";
 
-const categories = [
-  { type: "work", color: "#d2ceff" },
-  { type: "study", color: "#d1e5f7" },
-  { type: "entertainment", color: "#ffcece" },
-  { type: "family", color: "#daf2d6" },
-];
-
 const TagsWithLabel=()=>{
     return(
         <Grid container direction='row' alignItems='center' style={{ background:'#eeeeee',padding:'2px',borderRadius:'10px'}}>
