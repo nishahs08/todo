@@ -25,14 +25,15 @@ const TagsWithLabel = () => {
   )
 }
 
-interface FormProps {
+interface EditFormProps {
   cancel: () => void,
   categories: category[],
 	todos: todo[];
 	setTodos: (value: todo[]) => void;
   setopenForm:(value:boolean)=>void;
+  id:string
 }
-export const Form: React.FC<FormProps> = ({ cancel, categories ,todos,setTodos,setopenForm}) => {
+export const EditForm: React.FC<EditFormProps> = ({ cancel, categories ,todos,setTodos,setopenForm,id}) => {
   const [selected, setSelected] = useState<categoryType[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -50,34 +51,23 @@ export const Form: React.FC<FormProps> = ({ cancel, categories ,todos,setTodos,s
     }
   }
 
-  const add = () => {
-    // const tagIds  = categories.reduce((acc,c) => {
-    //   const temp = selected.find(s => s === c.type)
-    //   if (temp) {
-    //     return  acc=[...acc,c.id]
-    //   }
-    // },[])
-
-   
-    console.log({
-      title: title,
-      description: description,
-      tags:[2,3,1]
-    });
-    const todo:todo={
-      title: title,
-      description: description,
-      tags:[2,3,1],
-      id:uuidv4(),done:false
-      
-    }
-    setTodos([...todos,todo])
-    setopenForm(false)
+  const edit = () =>{
+     const updatedTodo = todos.map(todo=>{
+         if(todo.id === id){
+             return {
+                title: title,
+                description: description,
+                tags:[2,3,1],
+                id:uuidv4(),done:false
+              }
+         }else{
+             return todo
+         }
+     })
+     setTodos(updatedTodo);
+     setopenForm(false)
   }
-
-  const edit=()=>{
-
-  }
+ 
   useEffect(() => {console.log("selected", selected)},[selected])
   return (
     <Grid container direction="column" spacing={2} >
@@ -86,11 +76,10 @@ export const Form: React.FC<FormProps> = ({ cancel, categories ,todos,setTodos,s
           <Grid item>
             <CustomButton label="Cancel" onClick={() => setopenForm(false)} />
           </Grid>
-     
+      
           <Grid item>
-            <CustomButton label="Add" onClick={() => add()} />
+            <CustomButton label="Edit" onClick={edit} />
           </Grid>
-        
 
         </Grid>
       </Grid>

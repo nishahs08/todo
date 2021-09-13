@@ -1,4 +1,6 @@
-import { makeStyles, Grid, Card, CardHeader, CardActions, CardContent, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { makeStyles, Grid, Card, CardHeader, CardActions, CardContent, IconButton, Menu, MenuItem ,Dialog,
+	DialogContent,
+    useMediaQuery,useTheme} from '@material-ui/core';
 import { CustomCheckbox } from './CustomCheckbox';
 import { Tag } from './Tag';
 import EditBtn from '@material-ui/icons/MoreHoriz';
@@ -7,7 +9,8 @@ import { useState } from 'react';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import { Categories } from './Categories';
 import { Category } from '@material-ui/icons';
-import { category, todo, categoryType } from '../types'
+import { category, todo, categoryType } from '../types';
+import {EditForm} from '../Components/EditForm';
 const useStyles = makeStyles({
     root: {
 
@@ -23,7 +26,10 @@ export const Todos: React.FC<TodosProps> = ({ todos, categories,setTodos }) => {
     const classes = useStyles();
     const [openMenu, setOpenMenu] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
+	const [openForm, setopenForm] = useState<boolean>(false);
+    const [todoId,setTodoId]=useState<string>('');
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -42,7 +48,27 @@ export const Todos: React.FC<TodosProps> = ({ todos, categories,setTodos }) => {
 setTodos(temTodos)
         console.log(value, id,temTodos)
     }
+    const edit=(id:any)=>{
+        setTodoId(id);
+        handleClose();
+        setopenForm(true);
+       
+        console.log("ooooo",id)
+    }
+
+    const deleteTodo = (id:any)=>{
+            setTodoId(id);
+            handleClose();
+            const newTodos = todos.filter(todo=>{
+                if(todo.id !== id){
+                    return todo
+                }
+            })
+            setTodos(newTodos)
+            alert("Are you Sure you wanna delete? ")
+    }
     return (
+        <>
         <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 900: 3 }}>
             <Masonry>
                 {
@@ -54,9 +80,10 @@ setTodos(temTodos)
                                 keepMounted
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}>
-                                <MenuItem onClick={handleClose}>EDIT</MenuItem>
-                                <MenuItem onClick={handleClose}>DELETE</MenuItem>
+                                <MenuItem onClick={()=>edit(id)}>EDIT</MenuItem>
+                                <MenuItem onClick={()=>deleteTodo(id)}>DELETE</MenuItem>
                             </Menu>
+         
                             <CardContent  style={{textDecorationLine: done ? 'line-through' : 'none'}}>{description}</CardContent>
                             <CardActions>
                                 <Grid container justifyContent='space-between' alignItems="center">
@@ -88,5 +115,20 @@ setTodos(temTodos)
 
 
         </ResponsiveMasonry>
+        {openForm && (
+            <Dialog open={openForm} fullScreen={fullScreen}>
+                <DialogContent>
+                    <EditForm
+                        cancel={() => setopenForm(false)}
+                        categories={categories}
+                        setTodos={setTodos}
+                        todos={todos}
+                        setopenForm={setopenForm}
+                        id={todoId}
+                    ></EditForm>
+                </DialogContent>
+            </Dialog>
+        )}
+        </>
     )
 }

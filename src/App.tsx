@@ -8,6 +8,7 @@ import AdobeClean from "./fonts/AdobeClean/AdobeClean-Regular.woff";
 import { Dashboard } from "./Pages/Dashboard";
 import { v4 as uuidv4 } from 'uuid';
 import {category, todo} from './types'
+import { LandingPage } from "./Pages/LandingPage";
 const theme = createTheme({
   typography: {
     fontFamily: "AdobeClean, Arial",
@@ -73,7 +74,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Dashboard categories={categories} todos={todos} setTodos={setTodos}/>
+      {todos.length > 0 ?  <Dashboard categories={categories} todos={todos} setTodos={setTodos}/> : <LandingPage/>}
+     
     </ThemeProvider>
   );
 }
