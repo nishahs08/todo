@@ -18,15 +18,17 @@ const useStyles=makeStyles({
 
 interface TextBoxProps{
     label:string,
-
+    value:string,
+    setValue:(value:string)=>void
 
 }
-export const TextBox :React.FC<TextBoxProps>= ({label}) => {
+export const TextBox :React.FC<TextBoxProps>= ({label,value,setValue}) => {
    const classes=useStyles();
+   
     return (
         <>
             <InputLabel className={classes.label}>{label}</InputLabel>
-            <TextField className={classes.root} variant='outlined' fullWidth placeholder='placeholder' InputProps={{classes:{notchedOutline:classes.noBorder}}}></TextField>
+            <TextField className={classes.root} value={value} onChange={(e :any)=>setValue(e.target.value)} variant='outlined' fullWidth placeholder='placeholder' InputProps={{classes:{notchedOutline:classes.noBorder}}}></TextField>
         </>
     )
 }

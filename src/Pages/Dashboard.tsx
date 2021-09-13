@@ -72,37 +72,28 @@ export const Dashboard: React.FC<DashboardProps> = ({
 	const [openAddTodo, setOpenAddTodo] = useState<boolean>(false);
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
 	useEffect(() => setFilteredTodos(todos), []);
 	const filterTodosByCategory = () => {
 		const category = categories.find(
 			(category) => category.type === activeCategory
 		);
-		console.log("category", category);
-
 		const filteredTodosList = todos.filter((todo) => {
-			console.log("todos", todos);
 			return todo.tags.find((tagId) => category && category.id === tagId);
 		});
-		setFilteredTodos(filteredTodosList);
+		if(hideDone){
+			const unDone =  filteredTodosList.filter((todo)=>todo.done===false);
+			setFilteredTodos(unDone );
+		}else{
+			setFilteredTodos(filteredTodosList);
+		}
 		console.log("todo", filteredTodosList);
 	};
 
 	useEffect(() => {
 		filterTodosByCategory();
-		console.log("ActiveCategory", activeCategory);
-	}, [activeCategory]);
-
-	const filterUndoneTasks = () => {
-		const undoneTasksList = todos.filter((todo) => {
-			if (todo.done === false) return todo;
-		});
-		setunDoneTasks(undoneTasksList);
-		console.log(undoneTasksList);
-	};
-
-	useEffect(() => {
-		filterUndoneTasks();
-	}, [hideDone]);
+		console.log("ActiveCategory", activeCategory,hideDone);
+	}, [activeCategory,hideDone]);
 
 	return (
 		<>
@@ -168,13 +159,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
 			</Hidden>
 
 			<Box className={classes.content}>
-				{activeCategory === "all" ? (
-					<Todos todos={todos} categories={categories} />
-				) : hideDone === false ? (
-					<Todos todos={filteredTodos} categories={categories} />
-				) : (
-							<Todos todos={undoneTasks} categories={categories} />
-						)}
+
+						{activeCategory === "all" && 	<Todos todos={todos} categories={categories} />}
+						{activeCategory !== "all" && 	<Todos todos={filteredTodos} categories={categories} />}
 			</Box>
 
 			{openAddTodo && (
