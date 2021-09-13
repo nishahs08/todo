@@ -69,7 +69,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 	const [filteredTodos, setFilteredTodos] = useState<todo[]>([]);
 	const [hideDone, setHideDone] = useState<boolean>(false);
 	const [undoneTasks, setunDoneTasks] = useState<todo[]>([]);
-	const [openAddTodo, setOpenAddTodo] = useState<boolean>(false);
+	const [openForm, setopenForm] = useState<boolean>(false);
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -113,7 +113,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
 	return (
 		<>
-			<Navbar open={openAddTodo} setOpen={setOpenAddTodo} />
+			<Navbar open={openForm} setOpen={setopenForm} />
 			<Hidden smDown>
 				<Box className={classes.sidebar}>
 					<Drawer
@@ -189,12 +189,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
  <Todos todos={filteredTodos} categories={categories} setTodos={setTodos} />
 			</Box>
 
-			{openAddTodo && (
-				<Dialog open={openAddTodo} fullScreen={fullScreen}>
+			{openForm && (
+				<Dialog open={openForm} fullScreen={fullScreen}>
 					<DialogContent>
 						<Form
-							cancel={() => setOpenAddTodo(false)}
+							cancel={() => setopenForm(false)}
 							categories={categories}
+							setTodos={setTodos}
+							todos={todos}
+							setopenForm={setopenForm}
 						></Form>
 					</DialogContent>
 				</Dialog>

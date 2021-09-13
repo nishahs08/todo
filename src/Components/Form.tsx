@@ -3,9 +3,9 @@ import { CustomButton } from "./CustomButton";
 import { TextBox } from "./TextBox";
 import { Tag } from "./Tag";
 import { Categories } from "./Categories";
-import { category, categoryType } from "../types";
+import { category, categoryType, todo } from "../types";
 import { useEffect, useState } from "react";
-
+import { v4 as uuidv4 } from 'uuid';
 const useStyles = makeStyles({
   selected: {
     backgroundColor: 'red',
@@ -27,9 +27,12 @@ const TagsWithLabel = () => {
 
 interface FormProps {
   cancel: () => void,
-  categories: category[]
+  categories: category[],
+	todos: todo[];
+	setTodos: (value: todo[]) => void;
+  setopenForm:(value:boolean)=>void
 }
-export const Form: React.FC<FormProps> = ({ cancel, categories }) => {
+export const Form: React.FC<FormProps> = ({ cancel, categories ,todos,setTodos,setopenForm}) => {
   const [selected, setSelected] = useState<categoryType[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -48,20 +51,28 @@ export const Form: React.FC<FormProps> = ({ cancel, categories }) => {
   }
 
   const add = () => {
-    const tagIds = categories.filter((c, i) => {
-      const temp = selected.find(s => s === c.type)
-      console.log("temp", temp)
-      if (temp) {
-        console.log("sele", c.type, c.id)
-        return c.id
-      }
-    })
-    console.log(tagIds)
+    // const tagIds  = categories.reduce((acc,c) => {
+    //   const temp = selected.find(s => s === c.type)
+    //   if (temp) {
+    //     return  acc=[...acc,c.id]
+    //   }
+    // },[])
+
+   
     console.log({
       title: title,
       description: description,
-      tags: tagIds
-    })
+      tags:[2,3,1]
+    });
+    const todo:todo={
+      title: title,
+      description: description,
+      tags:[2,3,1],
+      id:uuidv4(),done:false
+      
+    }
+    setTodos([...todos,todo])
+    setopenForm(false)
   }
 
   useEffect(() => {console.log("selected", selected)},[selected])
@@ -70,7 +81,7 @@ export const Form: React.FC<FormProps> = ({ cancel, categories }) => {
       <Grid item >
         <Grid container justifyContent='space-between'>
           <Grid item>
-            <CustomButton label="Cancel" onClick={() => cancel()} />
+            <CustomButton label="Cancel" onClick={() => setopenForm(false)} />
           </Grid>
           <Grid item>
             <CustomButton label="Add" onClick={() => add()} />

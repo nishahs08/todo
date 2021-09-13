@@ -22,7 +22,6 @@ const theme = createTheme({
 });
 
 const categories : category[] = [
- 
   {id:1, type: "work", color: "#d2ceff" },
   {id:2, type: "study", color: "#d1e5f7" },
   {id:3, type: "entertainment", color: "#ffcece" },
