@@ -74,8 +74,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {todos.length > 0 ?  <Dashboard categories={categories} todos={todos} setTodos={setTodos}/> : <LandingPage/>}
-     
+     <Dashboard categories={categories} todos={todos} setTodos={setTodos}/> 
     </ThemeProvider>
   );
 }

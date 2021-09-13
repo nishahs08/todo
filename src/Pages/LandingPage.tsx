@@ -12,34 +12,6 @@ const Header = () => (
   </Typography>
 );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const LandingPage = () => {
 
   return (

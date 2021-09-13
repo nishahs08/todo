@@ -8,11 +8,12 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 const useStyles = makeStyles({
   selected: {
-    backgroundColor: 'red',
-    margin: '5px'
+    backgroundColor: '#b2afa1',
+    margin: '5px',
+    borderRadius: '5px'
   },
   notSelected: {
-    backgroundColor: 'blue'
+    margin: '5px'
   }
 })
 
@@ -28,47 +29,61 @@ const TagsWithLabel = () => {
 interface EditFormProps {
   cancel: () => void,
   categories: category[],
-	todos: todo[];
-	setTodos: (value: todo[]) => void;
-  setopenForm:(value:boolean)=>void;
+  todos: todo[];
+  setTodos: (value: todo[]) => void;
+  setopenForm: (value: boolean) => void;
   id:string
 }
-export const EditForm: React.FC<EditFormProps> = ({ cancel, categories ,todos,setTodos,setopenForm,id}) => {
+export const EditForm: React.FC<EditFormProps> = ({ cancel, categories, todos, setTodos, setopenForm, id }) => {
   const [selected, setSelected] = useState<categoryType[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [tags, setTags] = useState([])
   const classes = useStyles();
   const handleSelected = (value: categoryType) => {
-   
+
     const activeState = selected.find(s => s === value);
     if (activeState) {
       const filtered = selected.filter((s) => s !== activeState);
-      console.log("filter",filtered)
+      console.log("filter", filtered)
       setSelected(filtered)
     } else {
-      console.log("add",selected)
-      setSelected([...selected,value])
+      console.log("add", selected)
+      setSelected([...selected, value])
     }
   }
 
   const edit = () =>{
-     const updatedTodo = todos.map(todo=>{
-         if(todo.id === id){
-             return {
-                title: title,
-                description: description,
-                tags:[2,3,1],
-                id:uuidv4(),done:false
-              }
-         }else{
-             return todo
-         }
-     })
-     setTodos(updatedTodo);
-     setopenForm(false)
-  }
+    const updatedTodo = todos.map(todo=>{
+        if(todo.id === id){
+            return {
+               title: title,
+               description: description,
+               tags:[2,3,1],
+               id:uuidv4(),done:false
+             }
+        }else{
+            return todo
+        }
+    })
+    setTodos(updatedTodo);
+    setopenForm(false);
+    setTitle('')
+ }
+
+ useEffect(()=>{
+
+   const todo= todos.find((todo)=>todo.id === id);
  
-  useEffect(() => {console.log("selected", selected)},[selected])
+ if(todo){
+   setTitle(todo.title);
+   console.log("------------------")
+console.log(todo)
+   setDescription(todo.description)
+ }
+ },[id])
+
+  useEffect(() => { console.log("selected", selected) }, [selected])
   return (
     <Grid container direction="column" spacing={2} >
       <Grid item >
@@ -76,7 +91,7 @@ export const EditForm: React.FC<EditFormProps> = ({ cancel, categories ,todos,se
           <Grid item>
             <CustomButton label="Cancel" onClick={() => setopenForm(false)} />
           </Grid>
-      
+
           <Grid item>
             <CustomButton label="Edit" onClick={edit} />
           </Grid>
@@ -110,7 +125,7 @@ export const EditForm: React.FC<EditFormProps> = ({ cancel, categories ,todos,se
             <Hidden mdUp >
               <Grid container direction="column" >
                 {categories.map(({ color, type }, i) => (
-                  <Grid item key={i}>
+                  <Grid item key={i} className={selected.includes(type) ? classes.selected : classes.notSelected}>
                     <Categories color={color} type={type} setActiveState={(type) => handleSelected(type)} />
                   </Grid>
                 ))
