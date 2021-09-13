@@ -74,26 +74,42 @@ export const Dashboard: React.FC<DashboardProps> = ({
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
 	useEffect(() => setFilteredTodos(todos), []);
+
 	const filterTodosByCategory = () => {
 		const category = categories.find(
 			(category) => category.type === activeCategory
 		);
-		const filteredTodosList = todos.filter((todo) => {
-			return todo.tags.find((tagId) => category && category.id === tagId);
-		});
-		if(hideDone){
-			const unDone =  filteredTodosList.filter((todo)=>todo.done===false);
-			setFilteredTodos(unDone );
-		}else{
-			setFilteredTodos(filteredTodosList);
+		if (activeCategory === 'all' ) {
+			if(hideDone){
+				const unDone = todos.filter((todo) => todo.done === false);
+				console.log(unDone.length)
+				setFilteredTodos(unDone);
+			}
+			else{
+				setFilteredTodos(todos)
+			}
+		
+		} else if (activeCategory !== 'all') {
+			console.log("12")
+			const filteredTodosList = todos.filter((todo) => {
+				return todo.tags.find((tagId) => category && category.id === tagId);
+			});
+		
+			if (hideDone) {
+				console.log("13")
+				const unDone = filteredTodosList.filter((todo) => todo.done === false);
+				setFilteredTodos(unDone);
+			} else {
+				console.log("14")
+				setFilteredTodos(filteredTodosList);
+			}
 		}
-		console.log("todo", filteredTodosList);
 	};
 
 	useEffect(() => {
 		filterTodosByCategory();
-		console.log("ActiveCategory", activeCategory,hideDone);
-	}, [activeCategory,hideDone]);
+		console.log("ActiveCategory", activeCategory, hideDone);
+	}, [activeCategory, hideDone, todos]);
 
 	return (
 		<>
@@ -108,7 +124,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 						classes={{ paperAnchorDockedLeft: classes.paperAnchorDockedLeft }}
 					>
 						<Toolbar />
-						<Toolbar />
+
 						<Grid
 							container
 							direction="column"
@@ -116,6 +132,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
 							justifyContent="center"
 							className={classes.sidebar}
 						>
+							<Grid item onClick={() => setActiveCategory('all')}>
+								<Typography style={{ color: 'red' }}>List All</Typography>
+							</Grid>
 							{categories.map(({ color, type }, i) => (
 								<Grid item key={i}>
 									<Categories
@@ -138,7 +157,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 			</Hidden>
 			<Hidden mdUp>
 				<Toolbar />
-				<Grid container direction="row" style={{ margin: "20px" }}>
+				<Grid container alignItems="center" direction="row" style={{ margin: "20px" }}>
 					<Grid item onClick={() => setActiveCategory('all')}>
 						<Typography style={{ color: 'red' }}>List All</Typography>
 					</Grid>
@@ -152,6 +171,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
 							/>
 						</Grid>
 					))}
+					<Grid item>
+						<CustomCheckbox
+							label="Hide done tasks"
+							checked={hideDone}
+							setChecked={setHideDone}
+						/>
+					</Grid>
 				</Grid>
 			</Hidden>
 			<Hidden smDown>
@@ -160,8 +186,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
 			<Box className={classes.content}>
 
-						{activeCategory === "all" && 	<Todos todos={todos} categories={categories} />}
-						{activeCategory !== "all" && 	<Todos todos={filteredTodos} categories={categories} />}
+ <Todos todos={filteredTodos} categories={categories} setTodos={setTodos} />
 			</Box>
 
 			{openAddTodo && (
