@@ -32,13 +32,13 @@ interface EditFormProps {
   todos: todo[];
   setTodos: (value: todo[]) => void;
   setopenForm: (value: boolean) => void;
-  id:string
+  id: string
 }
 export const EditForm: React.FC<EditFormProps> = ({ cancel, categories, todos, setTodos, setopenForm, id }) => {
   const [selected, setSelected] = useState<categoryType[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [tags, setTags] = useState([])
+  const [tags, setTags] = useState<number[]>([])
   const classes = useStyles();
   const handleSelected = (value: categoryType) => {
 
@@ -53,35 +53,44 @@ export const EditForm: React.FC<EditFormProps> = ({ cancel, categories, todos, s
     }
   }
 
-  const edit = () =>{
-    const updatedTodo = todos.map(todo=>{
-        if(todo.id === id){
-            return {
-               title: title,
-               description: description,
-               tags:[2,3,1],
-               id:uuidv4(),done:false
-             }
-        }else{
-            return todo
+  const edit = () => {
+
+    const tagIds = categories.filter((c) => {
+      return selected.includes(c.type)
+    }
+    ).map(item=>item.id)
+
+    
+
+    const updatedTodo = todos.map(todo => {
+      if (todo.id === id) {
+        return {
+          title: title,
+          description: description,
+          tags: selected ? tagIds : todo.tags,
+          id: uuidv4(), done: false
         }
+      } else {
+        return todo
+      }
     })
+
     setTodos(updatedTodo);
     setopenForm(false);
     setTitle('')
- }
 
- useEffect(()=>{
+  }
 
-   const todo= todos.find((todo)=>todo.id === id);
- 
- if(todo){
-   setTitle(todo.title);
-   console.log("------------------")
-console.log(todo)
-   setDescription(todo.description)
- }
- },[id])
+  useEffect(() => {
+
+    const todo = todos.find((todo) => todo.id === id);
+
+    if (todo) {
+      setTitle(todo.title);
+      setTags(todo.tags)
+      setDescription(todo.description)
+    }
+  }, [id])
 
   useEffect(() => { console.log("selected", selected) }, [selected])
   return (

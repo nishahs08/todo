@@ -63,6 +63,7 @@ export const Form: React.FC<FormProps> = ({ cancel, categories, todos, setTodos,
       description: description,
       tags: tagIds
     });
+    
     const todo: todo = {
       title: title,
       description: description,
