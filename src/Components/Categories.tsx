@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { Tag } from "./Tag";
 import {Typography,Grid} from '@material-ui/core'
-import {categoryType} from '../types'
+import {ICategoryType} from '../types'
 interface CategoriesProps{
-  type:categoryType,
+  type:ICategoryType,
   color:string ,
   setActiveState:(value:string)=>void
 }

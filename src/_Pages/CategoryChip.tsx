@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { Tag } from "./Tag";
 import {Typography,Grid} from '@material-ui/core'
-import {categoryType} from '../types'
+import {ICategoryType} from '../types'
 interface CategoryChipProps{
-  type:categoryType,
+  type:ICategoryType,
   color:string ,
   onClick:(value:string)=>void
 }

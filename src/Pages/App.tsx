@@ -4,7 +4,7 @@ import { CssBaseline, Box, DialogContent, Dialog, useMediaQuery, useTheme, Toolb
 //@ts-ignore
 import AdobeClean from "./../fonts/AdobeClean/AdobeClean-Regular.woff";
 import { v4 as uuidv4 } from 'uuid';
-import { category, todo } from '../types';
+import { ICategory, ITodo } from '../types';
 import { Todos } from "../_Pages/Todos";
 import { Navbar } from "../_Pages/Navbar";
 import { AddForm } from "../_Pages/AddForm";
@@ -23,7 +23,7 @@ const theme = createTheme({
     },
 });
 
-const categories: category[] = [
+const categories: ICategory[] = [
     { id: 1, type: "work", color: "#d2ceff" },
     { id: 2, type: "study", color: "#d1e5f7" },
     { id: 3, type: "entertainment", color: "#ffcece" },
@@ -82,31 +82,62 @@ const Wrapper = styled(Box)({
     },
 })
 function App() {
-    const [todos, setTodos] = useState<todo[]>([...todoList]);
+    const [todos, setTodos] = useState<ITodo[]>([...todoList]);
     const [openAdd, setOpenAdd] = useState<boolean>(false);
+    const [editableTodo, setEditableTodo] = useState<ITodo|undefined>(undefined);
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     useEffect(() => { console.log(openAdd) }, [openAdd])
 
-
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Navbar openAddTodo={() => setOpenAdd(true)} />
+            <Navbar openAddTodo={() => setEditableTodo({ title: '', description: '', tags: [], done: false, id: uuidv4() })} />
 
             <Sidebar categories={categories} todos={todos} setTodos={setTodos} />
 
-            <Dialog open={openAdd} fullScreen={fullScreen}>
+            {editableTodo && <Dialog open={!!editableTodo} fullScreen={fullScreen}>
                 <DialogContent>
-                    <AddForm addTodo={(todo: todo) => setTodos([...todos, todo])} categories={categories} dismissPopup={()=>setOpenAdd(false)} />
+                    <AddForm
+                        todo={editableTodo}
+                        setTodo={(todo: ITodo) => setEditableTodo(todo)}
+                        onAddClicked={() => {
+                            const isEditMode = todos.find((todo) => todo.id === editableTodo.id);
+                            if (isEditMode) {
+                                const newTodos = todos.map(todo => {
+                                    if (todo.id === editableTodo.id) {
+                                        return editableTodo;
+                                    } else {
+                                        return todo
+                                    }
+                                });
+                                setTodos(newTodos);
+                            } else {
+                                setTodos([...todos, editableTodo]);
+                            }
+                            setEditableTodo(undefined);
+                        }}
+                        categories={categories}
+                        dismissPopup={()=>setEditableTodo(undefined)}
+                        addTodo={(todo: ITodo) => setTodos([...todos, todo])}
+                    />
                 </DialogContent>
-            </Dialog>
+            </Dialog>}
           
             <Wrapper>
             <Toolbar />
-                <Todos todos={todos} categories={categories} setTodos={(todos) => setTodos(todos)} />
+                <Todos
+                    todos={todos}
+                    categories={categories}
+                    setTodos={(todos) => setTodos(todos)}
+                    handleEditTodo={(id) => {
+                        const todoToBeEdited = todos.find(todo => todo.id === id);
+                        console.log(id, todoToBeEdited);
+                        setEditableTodo(todoToBeEdited ? { ...todoToBeEdited } : undefined)
+                    }}
+                />
             </Wrapper>
 
             

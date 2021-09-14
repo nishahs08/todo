@@ -2,19 +2,19 @@ import { Grid, Typography } from "@material-ui/core";
 import { CustomButton } from "./CustomButton";
 import { TextBox } from "./TextBox";
 
-import { category, categoryType, todo } from "../types";
+import { ICategory, ICategoryType, ITodo } from "../types";
 import { useEffect, useState } from "react";
 import { CategoriesChips } from './CategoriesChips';
 
 interface EditFormProps {
   setOpenEdit: (value: boolean) => void;
-  categories: category[],
-  todo: todo,
-  setTodo: (value: todo) => void,
+  categories: ICategory[],
+  todo: ITodo,
+  setTodo: (value: ITodo) => void,
 
 }
 export const EditForm: React.FC<EditFormProps> = ({ categories, setOpenEdit, todo, setTodo }) => {
-  const [selected, setSelected] = useState<categoryType[]>([]);
+  const [selected, setSelected] = useState<ICategoryType[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 

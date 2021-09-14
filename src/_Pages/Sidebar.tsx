@@ -20,7 +20,7 @@ import { Categories } from "../Components/Categories";
 import { CustomCheckbox } from "../Components/CustomCheckbox";
 import { Todos } from "../Components/Todos";
 import { useEffect, useState } from "react";
-import { category, todo, categoryType } from "../types";
+import { ICategory, ITodo, ICategoryType } from "../types";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Form } from "../Components/Form";
@@ -59,9 +59,9 @@ const useStyles = makeStyles((theme: Theme) => ({
       }
 }));
 interface SidebarProps {
-	categories: category[];
-	todos: todo[];
-	setTodos: (value: todo[]) => void;
+	categories: ICategory[];
+	todos: ITodo[];
+	setTodos: (value: ITodo[]) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -70,10 +70,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 	setTodos,
 }) => {
 	const classes = useStyles();
-	const [activeCategory, setActiveCategory] = useState<categoryType>("all");
-	const [filteredTodos, setFilteredTodos] = useState<todo[]>([]);
+	const [activeCategory, setActiveCategory] = useState<ICategoryType>("all");
+	const [filteredTodos, setFilteredTodos] = useState<ITodo[]>([]);
 	const [hideDone, setHideDone] = useState<boolean>(false);
-	const [undoneTasks, setunDoneTasks] = useState<todo[]>([]);
+	const [undoneTasks, setunDoneTasks] = useState<ITodo[]>([]);
 	const [openForm, setopenForm] = useState<boolean>(false);
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));

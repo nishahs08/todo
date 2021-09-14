@@ -7,7 +7,7 @@ import AdobeClean from "./fonts/AdobeClean/AdobeClean-Regular.woff";
 
 import { Dashboard } from "./Pages/Dashboard";
 import { v4 as uuidv4 } from 'uuid';
-import {category, todo} from './types'
+import {ICategory, ITodo} from './types'
 import { LandingPage } from "./Pages/LandingPage";
 const theme = createTheme({
   typography: {
@@ -22,7 +22,7 @@ const theme = createTheme({
   },
 });
 
-const categories : category[] = [
+const categories : ICategory[] = [
   {id:1, type: "work", color: "#d2ceff" },
   {id:2, type: "study", color: "#d1e5f7" },
   {id:3, type: "entertainment", color: "#ffcece" },
@@ -70,7 +70,7 @@ const Container = styled(Box)({
   alignItems: "center",
 });
 function App() {
-  const [todos,setTodos] = useState<todo[]>([...todoList])
+  const [todos,setTodos] = useState<ITodo[]>([...todoList])
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

@@ -13,7 +13,7 @@ import {
     useMediaQuery,
     useTheme,
 } from "@material-ui/core";
-import { category, todo } from "../types"
+import { ICategory, ITodo } from "../types"
 //@ts-ignore
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { Todo } from "./Todo";
@@ -21,14 +21,15 @@ import { useState } from "react";
 import { EditForm } from './EditForm'
 
 interface TodosProps {
-    todos: todo[];
-    categories: category[];
-    setTodos: (value: todo[]) => void
+    todos: ITodo[];
+    categories: ICategory[];
+    setTodos: (value: ITodo[]) => void
+    handleEditTodo: (id: string) => void
 }
-export const Todos: React.FC<TodosProps> = ({ todos, categories, setTodos }) => {
-    const [todo, setTodo] = useState<todo | null>(null);
+export const Todos: React.FC<TodosProps> = ({ todos, categories, setTodos, handleEditTodo }) => {
+    const [todo, setTodo] = useState<ITodo | null>(null);
     const [openEdit, setOpenEdit] = useState<boolean>(true);
-    const [todoIdToUpdate, setTodoIdToUpdate] = useState<string>('')
+
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -49,11 +50,11 @@ export const Todos: React.FC<TodosProps> = ({ todos, categories, setTodos }) => 
             setTodo(filteredTodo);
         }
 
-        setTodoIdToUpdate(id);
+        // setTodoIdToUpdate(id);
         setOpenEdit(true);
     }
 
-    const setUpdateTodo = (value: todo) => {
+    const setUpdateTodo = (value: ITodo) => {
         const updatedTodos = todos.map(todo => {
             if (todo.id === value.id) {
                 return value
@@ -71,9 +72,8 @@ export const Todos: React.FC<TodosProps> = ({ todos, categories, setTodos }) => 
                         key={index}
                         categories={categories}
                         changeTodoDoneStatus={(value, id) => changeTodoDoneStatus(value, id)}
-                        editTodo={(id) =>editTodo(id)}
+                        editTodo={handleEditTodo}
                         setOpenEdit={setOpenEdit} />)
-                      
                 }
             </Masonry>
         </ResponsiveMasonry>
@@ -81,7 +81,7 @@ export const Todos: React.FC<TodosProps> = ({ todos, categories, setTodos }) => 
         {todo &&
             <Dialog open={openEdit} fullScreen={fullScreen}>
                 <DialogContent>
-                    <EditForm todo={todo} setTodo={(value: todo) => setUpdateTodo(value)} categories={categories} setOpenEdit={setOpenEdit} />
+                    <EditForm todo={todo} setTodo={(value: ITodo) => setUpdateTodo(value)} categories={categories} setOpenEdit={setOpenEdit} />
                 </DialogContent>
             </Dialog>
         }

@@ -1,8 +1,8 @@
 
 
-export interface todo { title: string, description: string, done: boolean, tags: number[], id: string };
+export interface ITodo { title: string, description: string, done: boolean, tags: number[], id: string };
 
-export type categoryType = 'all' | 'work' | 'entertainment' | 'study' | 'family' | string
+export type ICategoryType = 'all' | 'work' | 'entertainment' | 'study' | 'family' | string
 
-export interface category { type: categoryType, color: string, id: number };
+export interface ICategory { type: ICategoryType, color: string, id: number };
 

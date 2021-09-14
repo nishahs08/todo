@@ -15,15 +15,15 @@ import {
     useTheme,
 } from "@material-ui/core";
 import { useState } from "react";
-import { category, todo } from "../types";
+import { ICategory, ITodo } from "../types";
 import { CustomCheckbox } from "./CustomCheckbox";
 import { Tag } from "./Tag";
 import EditBtn from "@material-ui/icons/MoreHoriz";
 
 interface TodoProps {
-    todo: todo,
+    todo: ITodo,
     key: any,
-    categories: category[];
+    categories: ICategory[];
     changeTodoDoneStatus: (value: boolean, id: string) => void;
     setOpenEdit: (value: boolean) => void;
     editTodo: (value: string) => void
@@ -69,9 +69,7 @@ export const Todo: React.FC<TodoProps> = ({ todo, key, categories, changeTodoDon
         >
             <MenuItem onClick={(e) => {
                 handleClose(key);
-                if (todo) {
-                    editTodo(todo.id); setOpenEdit(true)
-                }
+                editTodo(todo.id);
             }}>EDIT</MenuItem>
             <MenuItem onClick={(e) => handleClose(key)}>DELETE</MenuItem>
         </Menu>

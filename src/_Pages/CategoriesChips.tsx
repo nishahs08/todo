@@ -10,7 +10,7 @@ import { CustomButton } from "./CustomButton";
 import { TextBox } from "./TextBox";
 import { Tag } from "./Tag";
 import { CategoryChip } from "./CategoryChip";
-import { category, categoryType, todo } from "../types";
+import { ICategory, ICategoryType, ITodo } from "../types";
 import { useEffect, useState } from "react";
 
 const useStyles = makeStyles({
@@ -24,9 +24,9 @@ const useStyles = makeStyles({
   },
 });
 interface CategoriesChipsProps {
-  selectedCategories: categoryType[];
-  categories: category[];
-  setSelectedCategories: (value: categoryType[]) => void;
+  selectedCategories: ICategoryType[];
+  categories: ICategory[];
+  setSelectedCategories: (value: ICategoryType[]) => void;
 }
 export const CategoriesChips: React.FC<CategoriesChipsProps> = ({
   selectedCategories,
@@ -37,7 +37,7 @@ export const CategoriesChips: React.FC<CategoriesChipsProps> = ({
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleCategoryClick = (value: categoryType) => {
+  const handleCategoryClick = (value: ICategoryType) => {
     const isAlreadySelected = selectedCategories.find((s) => s === value);
     if (isAlreadySelected) {
       const filtered = selectedCategories.filter((s) => s !== value);

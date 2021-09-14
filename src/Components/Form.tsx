@@ -3,7 +3,7 @@ import { CustomButton } from "./CustomButton";
 import { TextBox } from "./TextBox";
 import { Tag } from "./Tag";
 import { Categories } from "./Categories";
-import { category, categoryType, todo } from "../types";
+import { ICategory, ICategoryType, ITodo } from "../types";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 const useStyles = makeStyles({
@@ -28,17 +28,17 @@ const TagsWithLabel = () => {
 
 interface FormProps {
   cancel: () => void,
-  categories: category[],
-  todos: todo[];
-  setTodos: (value: todo[]) => void;
+  categories: ICategory[],
+  todos: ITodo[];
+  setTodos: (value: ITodo[]) => void;
   setopenForm: (value: boolean) => void;
 }
 export const Form: React.FC<FormProps> = ({ cancel, categories, todos, setTodos, setopenForm }) => {
-  const [selected, setSelected] = useState<categoryType[]>([]);
+  const [selected, setSelected] = useState<ICategoryType[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const classes = useStyles();
-  const handleSelected = (value: categoryType) => {
+  const handleSelected = (value: ICategoryType) => {
 
     const activeState = selected.find(s => s === value);
     if (activeState) {
@@ -64,7 +64,7 @@ export const Form: React.FC<FormProps> = ({ cancel, categories, todos, setTodos,
       tags: tagIds
     });
     
-    const todo: todo = {
+    const todo: ITodo = {
       title: title,
       description: description,
       tags: tagIds,

@@ -19,18 +19,16 @@ import EditBtn from "@material-ui/icons/MoreHoriz";
 import { useState } from "react";
 //@ts-ignore
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { Categories } from "./Categories";
-import { Category } from "@material-ui/icons";
-import { category, todo, categoryType } from "../types";
+import { ICategory, ITodo, ICategoryType } from "../types";
 import { EditForm } from "../Components/EditForm";
 const useStyles = makeStyles({
     root: {},
 });
 
 interface TodosProps {
-    categories: category[];
-    todos: todo[];
-    setTodos: (value: todo[]) => void;
+    categories: ICategory[];
+    todos: ITodo[];
+    setTodos: (value: ITodo[]) => void;
 }
 export const Todos: React.FC<TodosProps> = ({
     todos,
@@ -41,7 +39,7 @@ export const Todos: React.FC<TodosProps> = ({
     const [anchorEls, setAnchorEls] = useState<(null | HTMLElement)[]>([]);
     const [openForm, setopenForm] = useState<boolean>(false);
     const [todoId, setTodoId] = useState<string>("");
-    const [todoToEdit, setTodoToEdit] = useState<todo | null>(null);
+    const [todoToEdit, setTodoToEdit] = useState<ITodo | null>(null);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
