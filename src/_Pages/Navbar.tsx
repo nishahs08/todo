@@ -18,17 +18,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface NavbarProps {
-    setOpen: () => void
+ openAddTodo: () => void
 }
-export const Navbar: React.FC<NavbarProps> = ({  setOpen }) => {
+export const Navbar: React.FC<NavbarProps> = ({  openAddTodo }) => {
     const classes = useStyles();
-
+            console.log('navbar');
     return (
-
         <AppBar position="fixed" elevation={0} className={classes.appbar}>
             <Toolbar className={classes.toolbar}>
                 <Typography className={classes.logo}>todo</Typography>
-                <IconButton onClick={setOpen} >
+                <IconButton onClick={()=>{console.log("I m here");openAddTodo()}} >
                     <AddIcon color='inherit' fontSize="large" />
                 </IconButton>
             </Toolbar>

@@ -89,21 +89,24 @@ function App() {
     const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     useEffect(() => { console.log(openAdd) }, [openAdd])
-    
-    
+
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Navbar setOpen={() => setOpenAdd(true)} />
+            <Navbar openAddTodo={() => setOpenAdd(true)} />
+
             <Sidebar categories={categories} todos={todos} setTodos={setTodos} />
+
+            <Dialog open={openAdd} fullScreen={fullScreen}>
+                <DialogContent>
+                    <AddForm setTodo={(todo: todo) => setTodos([...todos, todo])} categories={categories} setOpen={setOpenAdd} />
+                </DialogContent>
+            </Dialog>
+          
             <Wrapper>
-                <Dialog open={false} fullScreen={fullScreen}>
-                    <DialogContent>
-                        <AddForm setTodo={(todo: todo) => setTodos([...todos, todo])} categories={categories} setOpen={setOpenAdd} />
-                    </DialogContent>
-                </Dialog>
-                <Toolbar />
-                <Todos todos={todos} categories={categories}  setTodos={(todos)=>setTodos(todos)}/>
+            <Toolbar />
+                <Todos todos={todos} categories={categories} setTodos={(todos) => setTodos(todos)} />
             </Wrapper>
         </ThemeProvider>
     );
