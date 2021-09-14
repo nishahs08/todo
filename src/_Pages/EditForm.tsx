@@ -4,7 +4,7 @@ import { TextBox } from "./TextBox";
 
 import { category, categoryType, todo } from "../types";
 import { useEffect, useState } from "react";
-import { SelectedTags } from './Selected';
+import { CategoriesChips } from './CategoriesChips';
 
 interface EditFormProps {
   setOpenEdit: (value: boolean) => void;
@@ -66,7 +66,7 @@ export const EditForm: React.FC<EditFormProps> = ({ categories, setOpenEdit, tod
             <Typography>Tags</Typography>
           </Grid>
           <Grid item >
-            <SelectedTags selected={selected} setSelected={setSelected} categories={categories} />
+            <CategoriesChips selectedCategories={selected} setSelectedCategories={setSelected} categories={categories} />
           </Grid>
         </Grid>
       </Grid>

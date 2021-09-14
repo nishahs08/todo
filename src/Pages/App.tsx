@@ -100,7 +100,7 @@ function App() {
 
             <Dialog open={openAdd} fullScreen={fullScreen}>
                 <DialogContent>
-                    <AddForm setTodo={(todo: todo) => setTodos([...todos, todo])} categories={categories} setOpen={setOpenAdd} />
+                    <AddForm addTodo={(todo: todo) => setTodos([...todos, todo])} categories={categories} dismissPopup={()=>setOpenAdd(false)} />
                 </DialogContent>
             </Dialog>
           
@@ -108,6 +108,8 @@ function App() {
             <Toolbar />
                 <Todos todos={todos} categories={categories} setTodos={(todos) => setTodos(todos)} />
             </Wrapper>
+
+            
         </ThemeProvider>
     );
 }

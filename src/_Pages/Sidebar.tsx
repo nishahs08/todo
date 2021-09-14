@@ -118,7 +118,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
 	return (
 		<>
-			<Navbar open={openForm} setOpen={setopenForm} />
 			<Hidden smDown>
 				<Box className={classes.sidebar}>
 					<Drawer

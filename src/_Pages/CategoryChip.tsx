@@ -2,16 +2,16 @@ import { useState } from "react"
 import { Tag } from "./Tag";
 import {Typography,Grid} from '@material-ui/core'
 import {categoryType} from '../types'
-interface CategoriesProps{
+interface CategoryChipProps{
   type:categoryType,
   color:string ,
-  setActiveState:(value:string)=>void
+  onClick:(value:string)=>void
 }
-export const Categories:React.FC<CategoriesProps>=({type,color,setActiveState})=>{
+export const CategoryChip:React.FC<CategoryChipProps>=({type,color,onClick})=>{
    
     return(
         <> 
-            <Grid container spacing={1} alignItems='center' style={{padding:'10px'}} onClick={()=> setActiveState(type)}  >
+            <Grid container spacing={1} alignItems='center' style={{padding:'10px'}} onClick={()=> onClick(type)}  >
                 <Grid item> <Tag color={color} /> </Grid>
                 <Grid item><Typography>{type}</Typography></Grid>
             </Grid>
