@@ -12,12 +12,13 @@ import { useState } from "react";
 import { EditForm } from './EditForm'
 
 interface TodosProps {
+    allTodos: ITodo[];
     todos: ITodo[];
     categories: ICategory[];
     setTodos: (value: ITodo[]) => void
     handleEditTodo: (id: string) => void
 }
-export const Todos: React.FC<TodosProps> = ({ todos, categories, setTodos, handleEditTodo }) => {
+export const Todos: React.FC<TodosProps> = ({ allTodos, todos, categories, setTodos, handleEditTodo }) => {
     const [todo, setTodo] = useState<ITodo | null>(null);
     const [openEdit, setOpenEdit] = useState<boolean>(true);
 
@@ -25,13 +26,13 @@ export const Todos: React.FC<TodosProps> = ({ todos, categories, setTodos, handl
     const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     const changeTodoDoneStatus = (value: boolean, id: string) => {
-        const updatedTodo = todos.map(todo => {
+        const updatedTodos = allTodos.map(todo => {
             if (todo.id === id) {
                 todo.done = value
             }
             return todo
         })
-        setTodos(updatedTodo)
+        setTodos(updatedTodos)
     }
 
     // const editTodo = (id: string) => {

@@ -80,13 +80,14 @@ function App() {
 
 
     const category = categories.find((category) => categoryFilter === category.type)
+    console.log(todos);
     const todosFilteredByCategory = categoryFilter !== 'all' && category
-        ?
-        todos.filter(todo => todo.tags.includes(category?.id))
-        :
-        todos;
+        ? todos.filter(todo => todo.tags.includes(category?.id))
+        : todos;
 
-    const todosFilteredByStatus = statusFilter ?  todosFilteredByCategory.filter(todo => todo.done === statusFilter) :todos
+    const todosFilteredByStatusAndCategory = statusFilter
+        ? todosFilteredByCategory.filter(todo => todo.done !== statusFilter)
+        : todosFilteredByCategory
 
     return (
         <ThemeProvider theme={theme}>
@@ -126,7 +127,8 @@ function App() {
             <Wrapper>
                 <Toolbar />
                 <Todos
-                    todos={categoryFilter  ? todosFilteredByCategory : todosFilteredByStatus }
+                    allTodos={todos}
+                    todos={todosFilteredByStatusAndCategory}
                     categories={categories}
                     setTodos={(todos) => setTodos(todos)}
                     handleEditTodo={(id) => {
