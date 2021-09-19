@@ -1,10 +1,9 @@
 import { Grid, Typography, Hidden, makeStyles } from "@material-ui/core";
-import { CustomButton } from "../Components/CustomButton";
+import { CustomButton } from "./CustomButton";
 import { TextBox } from "./TextBox";
 import { CategoriesChips } from "./CategoriesChips";
 
 import { ICategory, ICategoryType, ITodo } from "../types";
-import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 const useStyles = makeStyles({
   selected: {
@@ -82,7 +81,7 @@ export const AddForm: React.FC<AddFormProps> = ({
                   return selectedTags; 
                 }, []);
 
-                setTodo({ ...todo, tags: tagIds });
+                setTodo({ ...todo, tags: tagIds ,id:uuidv4()});
               }}
               categories={categories}
             />

@@ -1,6 +1,5 @@
 import { Typography,useTheme } from "@material-ui/core";
-import {CustomButton} from '../Components/CustomButton';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import {CustomButton} from './CustomButton';
 
 
 const Header = () => (

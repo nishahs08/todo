@@ -1,13 +1,4 @@
 import {
-    makeStyles,
-    Grid,
-    Card,
-    CardHeader,
-    CardActions,
-    CardContent,
-    IconButton,
-    Menu,
-    MenuItem,
     Dialog,
     DialogContent,
     useMediaQuery,
@@ -43,16 +34,16 @@ export const Todos: React.FC<TodosProps> = ({ todos, categories, setTodos, handl
         setTodos(updatedTodo)
     }
 
-    const editTodo = (id: string) => {
-        const filteredTodo = todos.find(todo => todo.id === id);
-        console.log("open", filteredTodo)
-        if (filteredTodo) {
-            setTodo(filteredTodo);
-        }
+    // const editTodo = (id: string) => {
+    //     const filteredTodo = todos.find(todo => todo.id === id);
+    //     console.log("open", filteredTodo)
+    //     if (filteredTodo) {
+    //         setTodo(filteredTodo);
+    //     }
 
-        // setTodoIdToUpdate(id);
-        setOpenEdit(true);
-    }
+    //     // setTodoIdToUpdate(id);
+    //     setOpenEdit(true);
+    // }
 
     const setUpdateTodo = (value: ITodo) => {
         const updatedTodos = todos.map(todo => {

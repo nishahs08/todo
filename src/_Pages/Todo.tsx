@@ -1,6 +1,5 @@
 
 import {
-    makeStyles,
     Grid,
     Card,
     CardHeader,
@@ -9,10 +8,6 @@ import {
     IconButton,
     Menu,
     MenuItem,
-    Dialog,
-    DialogContent,
-    useMediaQuery,
-    useTheme,
 } from "@material-ui/core";
 import { useState } from "react";
 import { ICategory, ITodo } from "../types";

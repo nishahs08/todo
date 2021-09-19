@@ -1,29 +1,20 @@
 import {
-	AppBar,
 	Toolbar,
 	Typography,
 	useTheme,
-	IconButton,
 	Drawer,
 	Grid,
 	Box,
-	PaperProps,
 	Theme,
 	Hidden,
-	Dialog,
-	DialogContent,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import AddIcon from "@material-ui/icons/Add";
-import { Navbar } from "../Components/Navbar";
-import { Categories } from "../Components/Categories";
-import { CustomCheckbox } from "../Components/CustomCheckbox";
-import { Todos } from "../Components/Todos";
-import { useEffect, useState } from "react";
+import { Categories } from "./Categories";
+import { CustomCheckbox } from "./CustomCheckbox";
 import { ICategory, ITodo, ICategoryType } from "../types";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { Form } from "../Components/Form";
+
 const drawerWidth = 250;
 const useStyles = makeStyles((theme: Theme) => ({
 	toolbar: {
@@ -60,61 +51,60 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 interface SidebarProps {
 	categories: ICategory[];
-	todos: ITodo[];
-	setTodos: (value: ITodo[]) => void;
+	activeCategory: ICategoryType;
+	setActiveCategory:(value : ICategoryType)=> void;
+	hideDone:boolean;
+	setHideDone:(value:boolean)=>void
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
 	categories,
-	todos,
-	setTodos,
+	activeCategory,
+	setActiveCategory,
+	hideDone,
+	setHideDone
 }) => {
 	const classes = useStyles();
-	const [activeCategory, setActiveCategory] = useState<ICategoryType>("all");
-	const [filteredTodos, setFilteredTodos] = useState<ITodo[]>([]);
-	const [hideDone, setHideDone] = useState<boolean>(false);
-	const [undoneTasks, setunDoneTasks] = useState<ITodo[]>([]);
-	const [openForm, setopenForm] = useState<boolean>(false);
+
 	const theme = useTheme();
-	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const media=useMediaQuery(theme.breakpoints.up('md'))
-	useEffect(() => setFilteredTodos(todos), []);
 
-	const filterTodosByCategory = () => {
-		const category = categories.find(
-			(category) => category.type === activeCategory
-		);
-		if (activeCategory === 'all' ) {
-			if(hideDone){
-				const unDone = todos.filter((todo) => todo.done === false);
-				console.log(unDone.length)
-				setFilteredTodos(unDone);
-			}
-			else{
-				setFilteredTodos(todos)
-			}
-		
-		} else if (activeCategory !== 'all') {
-			console.log("12")
-			const filteredTodosList = todos.filter((todo) => {
-				return todo.tags.find((tagId) => category && category.id === tagId);
-			});
-		
-			if (hideDone) {
-				console.log("13")
-				const unDone = filteredTodosList.filter((todo) => todo.done === false);
-				setFilteredTodos(unDone);
-			} else {
-				console.log("14")
-				setFilteredTodos(filteredTodosList);
-			}
-		}
-	};
 
-	useEffect(() => {
-		filterTodosByCategory();
-		console.log("ActiveCategory", activeCategory, hideDone);
-	}, [activeCategory, hideDone, todos]);
+	// const filterTodosByCategory = () => {
+	// 	const category = categories.find(
+	// 		(category) => category.type === activeCategory
+	// 	);
+	// 	if (activeCategory === 'all' ) {
+	// 		if(hideDone){
+	// 			const unDone = todos.filter((todo) => todo.done === false);
+	// 			console.log(unDone.length)
+	// 			setFilteredTodos(unDone);
+	// 		}
+	// 		else{
+	// 			setFilteredTodos(todos)
+	// 		}
+		
+	// 	} else if (activeCategory !== 'all') {
+	// 		console.log("12")
+	// 		const filteredTodosList = todos.filter((todo) => {
+	// 			return todo.tags.find((tagId) => category && category.id === tagId);
+	// 		});
+		
+	// 		if (hideDone) {
+	// 			console.log("13")
+	// 			const unDone = filteredTodosList.filter((todo) => todo.done === false);
+	// 			setFilteredTodos(unDone);
+	// 		} else {
+	// 			console.log("14")
+	// 			setFilteredTodos(filteredTodosList);
+	// 		}
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	filterTodosByCategory();
+	// 	console.log("ActiveCategory", activeCategory, hideDone);
+	// }, [activeCategory, hideDone, todos]);
 
 	return (
 		<>
@@ -136,15 +126,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
 							justifyContent="center"
 							className={classes.sidebar}
 						>
-							<Grid item onClick={() => setActiveCategory('all')}>
-								<Typography style={{ color: 'red' }}>List All</Typography>
+							<Grid item >
+								<Typography  onClick={()=>setActiveCategory('all')}>List All</Typography>
 							</Grid>
 							{categories.map(({ color, type }, i) => (
 								<Grid item key={i} className={activeCategory === type ? classes.selected : classes.notSelected}>
 									<Categories
 										color={color}
 										type={type}
-										setActiveState={setActiveCategory}
+										//@ts-ignore
+										setActiveState={()=>setActiveCategory(type)}
+										
 									/>
 								</Grid>
 							))}
@@ -162,7 +154,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 			<Hidden mdUp>
 				<Toolbar />
 				<Grid container alignItems="center" direction={media ? 'column' :'row'} style={{ margin: "20px" }}>
-					<Grid item onClick={() => setActiveCategory('all')}>
+					<Grid item >
 						<Typography style={{ color: 'red' }}>List All</Typography>
 					</Grid>
 
@@ -171,7 +163,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 							<Categories
 								color={color}
 								type={type}
-								setActiveState={setActiveCategory}
+								//@ts-ignore
+								setActiveState={()=>setActiveCategory(type)}
 							/>
 						</Grid>
 					))}
