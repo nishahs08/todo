@@ -14,8 +14,7 @@
 @font-face {
 	font-family: 'Adobe Clean';
 	src: url('AdobeClean-BoldSemiCnIt.eot');
-	src: local('Adobe Clean Bold SemiCondensed Italic'),
-		local('AdobeClean-BoldSemiCnIt'),
+	src: local('Adobe Clean Bold SemiCondensed Italic'), local('AdobeClean-BoldSemiCnIt'),
 		url('AdobeClean-BoldSemiCnIt.eot?#iefix') format('embedded-opentype'),
 		url('AdobeClean-BoldSemiCnIt.woff') format('woff'),
 		url('AdobeClean-BoldSemiCnIt.ttf') format('truetype');
@@ -61,8 +60,7 @@
 	src: url('AdobeClean-Light.eot');
 	src: local('Adobe Clean Light'), local('AdobeClean-Light'),
 		url('AdobeClean-Light.eot?#iefix') format('embedded-opentype'),
-		url('AdobeClean-Light.woff') format('woff'),
-		url('AdobeClean-Light.ttf') format('truetype');
+		url('AdobeClean-Light.woff') format('woff'), url('AdobeClean-Light.ttf') format('truetype');
 	font-weight: 300;
 	font-style: normal;
 }
@@ -72,8 +70,7 @@
 	src: url('AdobeClean-Bold.eot');
 	src: local('Adobe Clean Bold'), local('AdobeClean-Bold'),
 		url('AdobeClean-Bold.eot?#iefix') format('embedded-opentype'),
-		url('AdobeClean-Bold.woff') format('woff'),
-		url('AdobeClean-Bold.ttf') format('truetype');
+		url('AdobeClean-Bold.woff') format('woff'), url('AdobeClean-Bold.ttf') format('truetype');
 	font-weight: bold;
 	font-style: normal;
 }
@@ -83,8 +80,7 @@
 	src: url('AdobeClean-It.eot');
 	src: local('Adobe Clean Italic'), local('AdobeClean-It'),
 		url('AdobeClean-It.eot?#iefix') format('embedded-opentype'),
-		url('AdobeClean-It.woff') format('woff'),
-		url('AdobeClean-It.ttf') format('truetype');
+		url('AdobeClean-It.woff') format('woff'), url('AdobeClean-It.ttf') format('truetype');
 	font-weight: normal;
 	font-style: italic;
 }

@@ -84,18 +84,14 @@ const Wrapper = styled(Box)({
 });
 function App() {
 	const [todos, setTodos] = useState<ITodo[]>([...todoList]);
-	const [editableTodo, setEditableTodo] = useState<ITodo | undefined>(
-		undefined
-	);
+	const [editableTodo, setEditableTodo] = useState<ITodo | undefined>(undefined);
 	const [categoryFilter, setCategoryFilter] = useState<ICategoryType>('all');
 	const [statusFilter, setStatusFilter] = useState<boolean>(false);
 	const [filteredTodos, setFilteredTodos] = useState<ITodo[]>([]);
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-	const category = categories.find(
-		(category) => categoryFilter === category.type
-	);
+	const category = categories.find((category) => categoryFilter === category.type);
 	console.log(todos);
 	const todosFilteredByCategory =
 		categoryFilter !== 'all' && category
@@ -155,9 +151,7 @@ function App() {
 							}}
 							categories={categories}
 							dismissPopup={() => setEditableTodo(undefined)}
-							addTodo={(todo: ITodo) =>
-								setTodos([...todos, todo])
-							}
+							addTodo={(todo: ITodo) => setTodos([...todos, todo])}
 						/>
 					</DialogContent>
 				</Dialog>
@@ -171,13 +165,9 @@ function App() {
 					categories={categories}
 					setTodos={(todos) => setTodos(todos)}
 					handleEditTodo={(id) => {
-						const todoToBeEdited = todos.find(
-							(todo) => todo.id === id
-						);
+						const todoToBeEdited = todos.find((todo) => todo.id === id);
 						console.log(id, todoToBeEdited);
-						setEditableTodo(
-							todoToBeEdited ? { ...todoToBeEdited } : undefined
-						);
+						setEditableTodo(todoToBeEdited ? { ...todoToBeEdited } : undefined);
 					}}
 				/>
 			</Wrapper>

@@ -7,11 +7,7 @@ interface CategoryChipProps {
 	color: string;
 	onClick: (value: string) => void;
 }
-export const CategoryChip: React.FC<CategoryChipProps> = ({
-	type,
-	color,
-	onClick,
-}) => {
+export const CategoryChip: React.FC<CategoryChipProps> = ({ type, color, onClick }) => {
 	return (
 		<>
 			<Grid

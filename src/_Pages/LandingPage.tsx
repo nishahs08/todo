@@ -15,12 +15,12 @@ export const LandingPage = () => {
 		<>
 			<Header />
 			<Typography style={{ color: '#b2afa1' }}>
-				Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,
-				consectetur, adipisci velit..
+				Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur,
+				adipisci velit..
 			</Typography>
 			<Typography style={{ color: '#b2afa1' }}>
-				There is no one who loves pain itself, who seeks after it and
-				wants to have it, simply because it is pain
+				There is no one who loves pain itself, who seeks after it and wants to have it,
+				simply because it is pain
 			</Typography>
 			<br />
 			<CustomButton label='Get Started' onClick={() => {}}></CustomButton>

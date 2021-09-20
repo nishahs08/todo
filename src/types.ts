@@ -6,13 +6,7 @@ export interface ITodo {
 	id: string;
 }
 
-export type ICategoryType =
-	| 'all'
-	| 'work'
-	| 'entertainment'
-	| 'study'
-	| 'family'
-	| string;
+export type ICategoryType = 'all' | 'work' | 'entertainment' | 'study' | 'family' | string;
 
 export interface ICategory {
 	type: ICategoryType;

@@ -1,11 +1,4 @@
-import {
-	Grid,
-	Typography,
-	Hidden,
-	makeStyles,
-	useMediaQuery,
-	useTheme,
-} from '@material-ui/core';
+import { Grid, Typography, Hidden, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import { CustomButton } from './CustomButton';
 import { TextBox } from './TextBox';
 import { Tag } from './Tag';
@@ -53,9 +46,7 @@ export const CategoriesChips: React.FC<CategoriesChipsProps> = ({
 					item
 					key={i}
 					className={
-						selectedCategories.includes(type)
-							? classes.selected
-							: classes.notSelected
+						selectedCategories.includes(type) ? classes.selected : classes.notSelected
 					}
 				>
 					<CategoryChip

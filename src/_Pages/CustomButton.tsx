@@ -5,10 +5,7 @@ interface CustomButtomProps {
 	onClick: () => void;
 }
 
-export const CustomButton: React.FC<CustomButtomProps> = ({
-	label,
-	onClick,
-}) => {
+export const CustomButton: React.FC<CustomButtomProps> = ({ label, onClick }) => {
 	return (
 		<Button
 			style={{

@@ -32,18 +32,13 @@ export const AddForm: React.FC<AddFormProps> = ({
 	setTodo,
 	onAddClicked,
 }) => {
-	const selectedCategories = todo.tags.reduce(
-		(types: ICategoryType[], tagId) => {
-			const matchedCategory = categories.find(
-				(category) => category.id === tagId
-			);
-			if (matchedCategory) {
-				types.push(matchedCategory.type);
-			}
-			return types;
-		},
-		[]
-	);
+	const selectedCategories = todo.tags.reduce((types: ICategoryType[], tagId) => {
+		const matchedCategory = categories.find((category) => category.id === tagId);
+		if (matchedCategory) {
+			types.push(matchedCategory.type);
+		}
+		return types;
+	}, []);
 
 	return (
 		<Grid container direction='column' spacing={2}>
@@ -69,9 +64,7 @@ export const AddForm: React.FC<AddFormProps> = ({
 				<TextBox
 					label='Description'
 					value={todo.description}
-					setValue={(description) =>
-						setTodo({ ...todo, description })
-					}
+					setValue={(description) => setTodo({ ...todo, description })}
 				/>
 			</Grid>
 			<Grid item>
@@ -84,19 +77,12 @@ export const AddForm: React.FC<AddFormProps> = ({
 							selectedCategories={selectedCategories}
 							setSelectedCategories={(_selectedCategories) => {
 								const tagIds = _selectedCategories.reduce(
-									(
-										selectedTags: number[],
-										_selectedCategory
-									) => {
+									(selectedTags: number[], _selectedCategory) => {
 										const matchedCategory = categories.find(
-											(category) =>
-												category.type ===
-												_selectedCategory
+											(category) => category.type === _selectedCategory
 										);
 										if (matchedCategory) {
-											selectedTags.push(
-												matchedCategory.id
-											);
+											selectedTags.push(matchedCategory.id);
 										}
 										return selectedTags;
 									},

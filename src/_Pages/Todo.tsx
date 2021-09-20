@@ -32,10 +32,7 @@ export const Todo: React.FC<TodoProps> = ({
 }) => {
 	const [anchorEls, setAnchorEls] = useState<(null | HTMLElement)[]>([]);
 
-	const handleClick = (
-		key: number,
-		event: React.MouseEvent<HTMLButtonElement>
-	) => {
+	const handleClick = (key: number, event: React.MouseEvent<HTMLButtonElement>) => {
 		const newAnchorEls = [...anchorEls];
 		newAnchorEls[key] = event.currentTarget;
 		setAnchorEls(newAnchorEls);
@@ -48,10 +45,7 @@ export const Todo: React.FC<TodoProps> = ({
 	};
 
 	return (
-		<Card
-			style={{ backgroundColor: '#fff9de', margin: '20px' }}
-			key={todo.id}
-		>
+		<Card style={{ backgroundColor: '#fff9de', margin: '20px' }} key={todo.id}>
 			<CardHeader
 				action={
 					<IconButton
@@ -93,11 +87,7 @@ export const Todo: React.FC<TodoProps> = ({
 				{todo.description}
 			</CardContent>
 			<CardActions>
-				<Grid
-					container
-					justifyContent='space-between'
-					alignItems='center'
-				>
+				<Grid container justifyContent='space-between' alignItems='center'>
 					<Grid item>
 						<Grid container spacing={1}>
 							{todo.tags
@@ -110,9 +100,7 @@ export const Todo: React.FC<TodoProps> = ({
 											<>
 												<Grid item>
 													{' '}
-													<Tag
-														color={category.color}
-													></Tag>
+													<Tag color={category.color}></Tag>
 												</Grid>
 											</>
 										);
@@ -124,9 +112,7 @@ export const Todo: React.FC<TodoProps> = ({
 						<CustomCheckbox
 							label='Done'
 							checked={todo.done}
-							setChecked={(value) =>
-								changeTodoDoneStatus(value, todo.id)
-							}
+							setChecked={(value) => changeTodoDoneStatus(value, todo.id)}
 						/>
 					</Grid>
 				</Grid>
