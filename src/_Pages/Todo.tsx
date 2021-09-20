@@ -7,105 +7,105 @@ import {
 	IconButton,
 	Menu,
 	MenuItem,
+	createStyles,
 } from '@material-ui/core';
-import { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { ICategory, ITodo } from '../types';
 import { CustomCheckbox } from './CustomCheckbox';
 import { Tag } from './Tag';
 import EditBtn from '@material-ui/icons/MoreHoriz';
+import { makeStyles } from '@material-ui/styles';
+
+const useTodoStyles = makeStyles(() =>
+	createStyles({
+		card: {
+			backgroundColor: '#fff9de',
+			margin: '20px',
+		},
+		cardHeader: {
+			textDecoration: 'none',
+		},
+		cardContent: {
+			textDecoration: 'none',
+		},
+		todoDone: {
+			textDecoration: 'line-through',
+		},
+	})
+);
 
 interface TodoProps {
 	todo: ITodo;
-	key: any;
 	categories: ICategory[];
+	onEditTodoClick: (value: string) => void;
 	changeTodoDoneStatus: (value: boolean, id: string) => void;
-	setOpenEdit: (value: boolean) => void;
-	editTodo: (value: string) => void;
 }
+
 export const Todo: React.FC<TodoProps> = ({
 	todo,
-	key,
 	categories,
 	changeTodoDoneStatus,
-	editTodo,
-	setOpenEdit,
+	onEditTodoClick,
 }) => {
-	const [anchorEls, setAnchorEls] = useState<(null | HTMLElement)[]>([]);
+	const classes = useTodoStyles();
+	const [menuRef, setMenuRef] = useState<null | HTMLElement>(null);
+	const openTodoMenu = (target: HTMLElement) => setMenuRef(target);
+	const closeTodoMenu = () => setMenuRef(null);
 
-	const handleClick = (key: number, event: React.MouseEvent<HTMLButtonElement>) => {
-		const newAnchorEls = [...anchorEls];
-		newAnchorEls[key] = event.currentTarget;
-		setAnchorEls(newAnchorEls);
+	const editTodo = () => {
+		closeTodoMenu();
+		onEditTodoClick(todo.id);
 	};
+	const deleteTodo = () => closeTodoMenu();
 
-	const handleClose = (key: number) => {
-		const newAnchorEls = [...anchorEls];
-		newAnchorEls[key] = null;
-		setAnchorEls(newAnchorEls);
-	};
+	const CardHeaderOptions = (
+		<IconButton onClick={(e) => openTodoMenu(e.currentTarget)}>
+			<EditBtn />
+		</IconButton>
+	);
+
+	const TagColors = todo.tags.reduce<ReactElement[]>((tagColors, tagId) => {
+		const tagCategory = categories.find((category) => category.id === tagId);
+		if (tagCategory) {
+			return [
+				...tagColors,
+				<Grid item>
+					{' '}
+					<Tag color={tagCategory.color}></Tag>
+				</Grid>,
+			];
+		} else {
+			return tagColors;
+		}
+	}, []);
 
 	return (
-		<Card style={{ backgroundColor: '#fff9de', margin: '20px' }} key={todo.id}>
+		<Card className={classes.card} key={todo.id}>
 			<CardHeader
-				action={
-					<IconButton
-						onClick={(e) => {
-							handleClick(key, e);
-						}}
-					>
-						<EditBtn />
-					</IconButton>
-				}
 				title={todo.title}
-				style={{
-					textDecorationLine: todo.done ? 'line-through' : 'none',
-				}}
+				action={CardHeaderOptions}
+				className={`${classes.cardHeader} ${todo.done ? classes.todoDone : ''}`}
 			/>
 			<Menu
-				id='simple-menu'
-				anchorEl={anchorEls[key]}
 				keepMounted
-				open={Boolean(anchorEls[key])}
-				onClose={handleClose}
+				id={todo.id}
+				open={!!menuRef}
+				anchorEl={menuRef}
+				onClose={closeTodoMenu}
 			>
-				<MenuItem
-					onClick={(e) => {
-						handleClose(key);
-						editTodo(todo.id);
-					}}
-				>
-					EDIT
-				</MenuItem>
-				<MenuItem onClick={(e) => handleClose(key)}>DELETE</MenuItem>
+				<MenuItem onClick={editTodo}>EDIT</MenuItem>
+				<MenuItem onClick={deleteTodo}>DELETE</MenuItem>
 			</Menu>
 
-			<CardContent
-				style={{
-					textDecorationLine: todo.done ? 'line-through' : 'none',
-				}}
-			>
+			<CardContent className={`${classes.cardContent} ${todo.done ? classes.todoDone : ''}`}>
 				{todo.description}
 			</CardContent>
+
 			<CardActions>
 				<Grid container justifyContent='space-between' alignItems='center'>
 					<Grid item>
 						<Grid container spacing={1}>
-							{todo.tags
-								.map((id) => {
-									const category = categories.find(
-										(category) => category.id === id
-									);
-									if (category)
-										return (
-											<>
-												<Grid item>
-													{' '}
-													<Tag color={category.color}></Tag>
-												</Grid>
-											</>
-										);
-								})
-								.filter((element) => element)}
+							{TagColors}
 						</Grid>
 					</Grid>
 					<Grid item>

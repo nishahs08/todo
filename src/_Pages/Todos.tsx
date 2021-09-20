@@ -13,6 +13,7 @@ interface TodosProps {
 	setTodos: (value: ITodo[]) => void;
 	handleEditTodo: (id: string) => void;
 }
+
 export const Todos: React.FC<TodosProps> = ({
 	allTodos,
 	todos,
@@ -20,12 +21,6 @@ export const Todos: React.FC<TodosProps> = ({
 	setTodos,
 	handleEditTodo,
 }) => {
-	const [todo, setTodo] = useState<ITodo | null>(null);
-	const [openEdit, setOpenEdit] = useState<boolean>(true);
-
-	const theme = useTheme();
-	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
 	const changeTodoDoneStatus = (value: boolean, id: string) => {
 		const updatedTodos = allTodos.map((todo) => {
 			if (todo.id === id) {
@@ -36,56 +31,21 @@ export const Todos: React.FC<TodosProps> = ({
 		setTodos(updatedTodos);
 	};
 
-	// const editTodo = (id: string) => {
-	//     const filteredTodo = todos.find(todo => todo.id === id);
-	//     console.log("open", filteredTodo)
-	//     if (filteredTodo) {
-	//         setTodo(filteredTodo);
-	//     }
-
-	//     // setTodoIdToUpdate(id);
-	//     setOpenEdit(true);
-	// }
-
-	const setUpdateTodo = (value: ITodo) => {
-		const updatedTodos = todos.map((todo) => {
-			if (todo.id === value.id) {
-				return value;
-			}
-			return todo;
-		});
-		setTodos(updatedTodos);
-	};
+	const Todos = todos.map((todoItem) => (
+		<Todo
+			todo={todoItem}
+			key={todoItem.id}
+			categories={categories}
+			onEditTodoClick={handleEditTodo}
+			changeTodoDoneStatus={(value, id) => changeTodoDoneStatus(value, id)}
+		/>
+	));
 
 	return (
 		<>
 			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 900: 3 }}>
-				<Masonry>
-					{todos.map((todoItem, index) => (
-						<Todo
-							todo={todoItem}
-							key={index}
-							categories={categories}
-							changeTodoDoneStatus={(value, id) => changeTodoDoneStatus(value, id)}
-							editTodo={handleEditTodo}
-							setOpenEdit={setOpenEdit}
-						/>
-					))}
-				</Masonry>
+				<Masonry>{Todos}</Masonry>
 			</ResponsiveMasonry>
-
-			{todo && (
-				<Dialog open={openEdit} fullScreen={fullScreen}>
-					<DialogContent>
-						<EditForm
-							todo={todo}
-							setTodo={(value: ITodo) => setUpdateTodo(value)}
-							categories={categories}
-							setOpenEdit={setOpenEdit}
-						/>
-					</DialogContent>
-				</Dialog>
-			)}
 		</>
 	);
 };

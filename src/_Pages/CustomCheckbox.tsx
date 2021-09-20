@@ -19,12 +19,14 @@ const useStyles = makeStyles({
 		color: '#69665C',
 	},
 });
-interface CustomCheckbox {
+
+interface CustomCheckboxProps {
 	label: string;
 	checked: boolean;
 	setChecked: (value: boolean) => void;
 }
-export const CustomCheckbox: React.FC<CustomCheckbox> = ({ label, checked, setChecked }) => {
+
+export const CustomCheckbox: React.FC<CustomCheckboxProps> = ({ label, checked, setChecked }) => {
 	const classes = useStyles();
 	return (
 		<FormControlLabel
@@ -39,7 +41,6 @@ export const CustomCheckbox: React.FC<CustomCheckbox> = ({ label, checked, setCh
 					disableRipple
 					checked={checked}
 					onChange={() => setChecked(!checked)}
-					name='Something'
 					color='default'
 					checkedIcon={<CheckBoxIcon />}
 				/>
