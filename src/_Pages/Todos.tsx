@@ -1,10 +1,11 @@
 import { Dialog, DialogContent, useMediaQuery, useTheme } from '@material-ui/core';
-import { ICategory, ITodo } from '../types';
+import { useState } from 'react';
 //@ts-ignore
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { Todo } from './Todo';
-import { useState } from 'react';
+
+import { ICategory, ITodo } from '../types';
 import { EditForm } from './EditForm';
+import { Todo } from './Todo';
 
 interface TodosProps {
 	allTodos: ITodo[];

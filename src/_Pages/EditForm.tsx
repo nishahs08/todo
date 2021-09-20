@@ -1,10 +1,10 @@
 import { Grid, Typography } from '@material-ui/core';
-import { CustomButton } from './CustomButton';
-import { TextBox } from './TextBox';
+import { useEffect, useState } from 'react';
 
 import { ICategory, ICategoryType, ITodo } from '../types';
-import { useEffect, useState } from 'react';
 import { CategoriesChips } from './CategoriesChips';
+import { CustomButton } from './CustomButton';
+import { TextBox } from './TextBox';
 
 interface EditFormProps {
 	setOpenEdit: (value: boolean) => void;

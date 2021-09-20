@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-import { ThemeProvider, createTheme, styled } from '@material-ui/core/styles';
 import {
 	CssBaseline,
 	Box,
@@ -9,14 +7,17 @@ import {
 	useTheme,
 	Toolbar,
 } from '@material-ui/core';
+import { ThemeProvider, createTheme, styled } from '@material-ui/core/styles';
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+import { AddForm } from './_Pages/AddForm';
+import { Navbar } from './_Pages/Navbar';
+import { Sidebar } from './_Pages/Sidebar';
+import { Todos } from './_Pages/Todos';
 //@ts-ignore
 import AdobeClean from './fonts/AdobeClean/AdobeClean-Regular.woff';
-import { v4 as uuidv4 } from 'uuid';
 import { ICategory, ICategoryType, ITodo } from './types';
-import { Todos } from './_Pages/Todos';
-import { Navbar } from './_Pages/Navbar';
-import { AddForm } from './_Pages/AddForm';
-import { Sidebar } from './_Pages/Sidebar';
 
 const theme = createTheme({
 	typography: {

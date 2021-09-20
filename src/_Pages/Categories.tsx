@@ -1,7 +1,9 @@
-import { useState } from 'react';
-import { Tag } from './Tag';
 import { Typography, Grid } from '@material-ui/core';
+import { useState } from 'react';
+
 import { ICategoryType } from '../types';
+import { Tag } from './Tag';
+
 interface CategoriesProps {
 	type: ICategoryType;
 	color: string;

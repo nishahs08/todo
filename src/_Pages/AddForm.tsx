@@ -1,10 +1,11 @@
 import { Grid, Typography, Hidden, makeStyles } from '@material-ui/core';
-import { CustomButton } from './CustomButton';
-import { TextBox } from './TextBox';
-import { CategoriesChips } from './CategoriesChips';
+import { v4 as uuidv4 } from 'uuid';
 
 import { ICategory, ICategoryType, ITodo } from '../types';
-import { v4 as uuidv4 } from 'uuid';
+import { CategoriesChips } from './CategoriesChips';
+import { CustomButton } from './CustomButton';
+import { TextBox } from './TextBox';
+
 const useStyles = makeStyles({
 	selected: {
 		backgroundColor: '#b2afa1',

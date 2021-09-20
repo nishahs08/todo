@@ -1,10 +1,10 @@
 import { Toolbar, Typography, useTheme, Drawer, Grid, Box, Theme, Hidden } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/styles';
+
+import { ICategory, ITodo, ICategoryType } from '../types';
 import { Categories } from './Categories';
 import { CustomCheckbox } from './CustomCheckbox';
-import { ICategory, ITodo, ICategoryType } from '../types';
-
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const drawerWidth = 250;
 const useStyles = makeStyles((theme: Theme) => ({

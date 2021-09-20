@@ -1,8 +1,8 @@
 import { Checkbox } from '@material-ui/core';
-import React from 'react';
 import { FormControlLabel } from '@material-ui/core';
-import CheckBoxIcon from '@material-ui/icons/CheckBoxOutlined';
 import { makeStyles } from '@material-ui/core/styles';
+import CheckBoxIcon from '@material-ui/icons/CheckBoxOutlined';
+import React from 'react';
 
 const useStyles = makeStyles({
 	root: {

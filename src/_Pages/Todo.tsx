@@ -9,12 +9,13 @@ import {
 	MenuItem,
 	createStyles,
 } from '@material-ui/core';
+import EditBtn from '@material-ui/icons/MoreHoriz';
+import { makeStyles } from '@material-ui/styles';
 import React, { ReactElement, useState } from 'react';
+
 import { ICategory, ITodo } from '../types';
 import { CustomCheckbox } from './CustomCheckbox';
 import { Tag } from './Tag';
-import EditBtn from '@material-ui/icons/MoreHoriz';
-import { makeStyles } from '@material-ui/styles';
 
 const useTodoStyles = makeStyles(() =>
 	createStyles({
