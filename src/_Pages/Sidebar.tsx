@@ -2,7 +2,9 @@ import { Toolbar, Typography, useTheme, Drawer, Grid, Box, Theme, Hidden } from 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/styles';
 
-import { ICategory, ITodo, ICategoryType } from '../types';
+
+
+import { ICategory, ICategoryType } from '../types';
 import { Categories } from './Categories';
 import { CustomCheckbox } from './CustomCheckbox';
 
@@ -58,42 +60,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
 	const theme = useTheme();
 	const media = useMediaQuery(theme.breakpoints.up('md'));
-
-	// const filterTodosByCategory = () => {
-	// 	const category = categories.find(
-	// 		(category) => category.type === activeCategory
-	// 	);
-	// 	if (activeCategory === 'all' ) {
-	// 		if(hideDone){
-	// 			const unDone = todos.filter((todo) => todo.done === false);
-	// 			console.log(unDone.length)
-	// 			setFilteredTodos(unDone);
-	// 		}
-	// 		else{
-	// 			setFilteredTodos(todos)
-	// 		}
-
-	// 	} else if (activeCategory !== 'all') {
-	// 		console.log("12")
-	// 		const filteredTodosList = todos.filter((todo) => {
-	// 			return todo.tags.find((tagId) => category && category.id === tagId);
-	// 		});
-
-	// 		if (hideDone) {
-	// 			console.log("13")
-	// 			const unDone = filteredTodosList.filter((todo) => todo.done === false);
-	// 			setFilteredTodos(unDone);
-	// 		} else {
-	// 			console.log("14")
-	// 			setFilteredTodos(filteredTodosList);
-	// 		}
-	// 	}
-	// };
-
-	// useEffect(() => {
-	// 	filterTodosByCategory();
-	// 	console.log("ActiveCategory", activeCategory, hideDone);
-	// }, [activeCategory, hideDone, todos]);
 
 	return (
 		<>

@@ -1,5 +1,4 @@
 import { Typography, Grid } from '@material-ui/core';
-import { useState } from 'react';
 
 import { ICategoryType } from '../types';
 import { Tag } from './Tag';

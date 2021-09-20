@@ -1,11 +1,7 @@
-import { Grid, Typography, Hidden, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { Grid, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 
-import { ICategory, ICategoryType, ITodo } from '../types';
+import { ICategory, ICategoryType } from '../types';
 import { CategoryChip } from './CategoryChip';
-import { CustomButton } from './CustomButton';
-import { Tag } from './Tag';
-import { TextBox } from './TextBox';
 
 const useStyles = makeStyles({
 	selected: {

@@ -1,21 +1,10 @@
-import { Grid, Typography, Hidden, makeStyles } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ICategory, ICategoryType, ITodo } from '../types';
 import { CategoriesChips } from './CategoriesChips';
 import { CustomButton } from './CustomButton';
 import { TextBox } from './TextBox';
-
-const useStyles = makeStyles({
-	selected: {
-		backgroundColor: '#b2afa1',
-		margin: '5px',
-		borderRadius: '5px',
-	},
-	notSelected: {
-		margin: '5px',
-	},
-});
 
 interface AddFormProps {
 	categories: ICategory[];

@@ -3,9 +3,12 @@ import EditBtn from '@material-ui/icons/MoreHoriz';
 import { makeStyles } from '@material-ui/styles';
 import React, { useState } from 'react';
 
+
+
 import { ITodoWithColors } from '../types';
 import { CustomCheckbox } from './CustomCheckbox';
 import { Tag } from './Tag';
+
 
 const useTodoStyles = makeStyles(() =>
 	createStyles({
@@ -50,7 +53,7 @@ export const Todo: React.FC<TodoProps> = ({ todo, onTodoStatusChanged, onEditTod
 	);
 
 	const TagColors = todo.tags.map((tag) => (
-		<Grid item>
+		<Grid item key={tag.tagId}>
 			{' '}
 			<Tag color={tag.color}></Tag>
 		</Grid>

@@ -2,6 +2,10 @@ import { AppBar, Toolbar, Typography, IconButton, Theme } from '@material-ui/cor
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/styles';
 
+
+
+
+
 const useStyles = makeStyles((theme: Theme) => ({
 	toolbar: {
 		justifyContent: 'space-between',
@@ -22,17 +26,11 @@ interface NavbarProps {
 }
 export const Navbar: React.FC<NavbarProps> = ({ openAddTodo }) => {
 	const classes = useStyles();
-	console.log('navbar');
 	return (
 		<AppBar position='fixed' elevation={0} className={classes.appbar}>
 			<Toolbar className={classes.toolbar}>
 				<Typography className={classes.logo}>todo</Typography>
-				<IconButton
-					onClick={() => {
-						console.log('I m here');
-						openAddTodo();
-					}}
-				>
+				<IconButton onClick={openAddTodo}>
 					<AddIcon color='inherit' fontSize='large' />
 				</IconButton>
 			</Toolbar>
