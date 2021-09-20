@@ -8,7 +8,7 @@ import {
 	Toolbar,
 } from '@material-ui/core';
 import { ThemeProvider, createTheme, styled } from '@material-ui/core/styles';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AddForm } from './_Pages/AddForm';
@@ -17,7 +17,7 @@ import { Sidebar } from './_Pages/Sidebar';
 import { Todos } from './_Pages/Todos';
 //@ts-ignore
 import AdobeClean from './fonts/AdobeClean/AdobeClean-Regular.woff';
-import { ICategory, ICategoryType, ITodo } from './types';
+import { ICategory, ICategoryType, ITagForTodo, ITodo } from './types';
 
 const theme = createTheme({
 	typography: {
@@ -84,20 +84,36 @@ const Wrapper = styled(Box)({
 	},
 });
 function App() {
+	const theme = useTheme();
+	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
 	const [todos, setTodos] = useState<ITodo[]>([...todoList]);
 	const [editableTodo, setEditableTodo] = useState<ITodo | undefined>(undefined);
 	const [categoryFilter, setCategoryFilter] = useState<ICategoryType>('all');
 	const [statusFilter, setStatusFilter] = useState<boolean>(false);
-	const [filteredTodos, setFilteredTodos] = useState<ITodo[]>([]);
-	const theme = useTheme();
-	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
 	const category = categories.find((category) => categoryFilter === category.type);
-	console.log(todos);
+
+	const todoForDisplay = todos.map((todo) => {
+		const todoTags = todo.tags.reduce<ITagForTodo[]>((tagWithColors, tagId) => {
+			const category = categories.find((category) => category.id === tagId);
+			if (!category) {
+				return tagWithColors;
+			} else {
+				return [...tagWithColors, { tagId: tagId, color: category.color }];
+			}
+		}, []);
+
+		return {
+			...todo,
+			tags: todoTags,
+		};
+	});
+
 	const todosFilteredByCategory =
 		categoryFilter !== 'all' && category
-			? todos.filter((todo) => todo.tags.includes(category?.id))
-			: todos;
+			? todoForDisplay.filter((todo) => todo.tags.find(({ tagId }) => tagId === category?.id))
+			: todoForDisplay;
 
 	const todosFilteredByStatusAndCategory = statusFilter
 		? todosFilteredByCategory.filter((todo) => todo.done !== statusFilter)
@@ -161,14 +177,19 @@ function App() {
 			<Wrapper>
 				<Toolbar />
 				<Todos
-					allTodos={todos}
 					todos={todosFilteredByStatusAndCategory}
-					categories={categories}
-					setTodos={(todos) => setTodos(todos)}
-					handleEditTodo={(id) => {
-						const todoToBeEdited = todos.find((todo) => todo.id === id);
-						console.log(id, todoToBeEdited);
+					onEditTodoClicked={(todoId) => {
+						const todoToBeEdited = todos.find((todo) => todo.id === todoId);
 						setEditableTodo(todoToBeEdited ? { ...todoToBeEdited } : undefined);
+					}}
+					onTodoStatusChanged={(todoId, status) => {
+						const updatedTodos = todos.map((todo) => {
+							if (todo.id === todoId) {
+								todo.done = status;
+							}
+							return todo;
+						});
+						setTodos(updatedTodos);
 					}}
 				/>
 			</Wrapper>

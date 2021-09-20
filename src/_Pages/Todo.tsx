@@ -1,19 +1,9 @@
-import {
-	Grid,
-	Card,
-	CardHeader,
-	CardActions,
-	CardContent,
-	IconButton,
-	Menu,
-	MenuItem,
-	createStyles,
-} from '@material-ui/core';
+import { Grid, Card, CardHeader, CardActions, CardContent, IconButton, Menu, MenuItem, createStyles } from '@material-ui/core';
 import EditBtn from '@material-ui/icons/MoreHoriz';
 import { makeStyles } from '@material-ui/styles';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 
-import { ICategory, ITodo } from '../types';
+import { ITodoWithColors } from '../types';
 import { CustomCheckbox } from './CustomCheckbox';
 import { Tag } from './Tag';
 
@@ -36,18 +26,12 @@ const useTodoStyles = makeStyles(() =>
 );
 
 interface TodoProps {
-	todo: ITodo;
-	categories: ICategory[];
-	onEditTodoClick: (value: string) => void;
-	changeTodoDoneStatus: (value: boolean, id: string) => void;
+	todo: ITodoWithColors;
+	onEditTodoClicked: (value: string) => void;
+	onTodoStatusChanged: (todoId: string, status: boolean) => void;
 }
 
-export const Todo: React.FC<TodoProps> = ({
-	todo,
-	categories,
-	changeTodoDoneStatus,
-	onEditTodoClick,
-}) => {
+export const Todo: React.FC<TodoProps> = ({ todo, onTodoStatusChanged, onEditTodoClicked }) => {
 	const classes = useTodoStyles();
 	const [menuRef, setMenuRef] = useState<null | HTMLElement>(null);
 	const openTodoMenu = (target: HTMLElement) => setMenuRef(target);
@@ -55,7 +39,7 @@ export const Todo: React.FC<TodoProps> = ({
 
 	const editTodo = () => {
 		closeTodoMenu();
-		onEditTodoClick(todo.id);
+		onEditTodoClicked(todo.id);
 	};
 	const deleteTodo = () => closeTodoMenu();
 
@@ -65,20 +49,12 @@ export const Todo: React.FC<TodoProps> = ({
 		</IconButton>
 	);
 
-	const TagColors = todo.tags.reduce<ReactElement[]>((tagColors, tagId) => {
-		const tagCategory = categories.find((category) => category.id === tagId);
-		if (tagCategory) {
-			return [
-				...tagColors,
-				<Grid item>
-					{' '}
-					<Tag color={tagCategory.color}></Tag>
-				</Grid>,
-			];
-		} else {
-			return tagColors;
-		}
-	}, []);
+	const TagColors = todo.tags.map((tag) => (
+		<Grid item>
+			{' '}
+			<Tag color={tag.color}></Tag>
+		</Grid>
+	));
 
 	return (
 		<Card className={classes.card} key={todo.id}>
@@ -113,7 +89,7 @@ export const Todo: React.FC<TodoProps> = ({
 						<CustomCheckbox
 							label='Done'
 							checked={todo.done}
-							setChecked={(value) => changeTodoDoneStatus(value, todo.id)}
+							setChecked={(value) => onTodoStatusChanged(todo.id, value)}
 						/>
 					</Grid>
 				</Grid>

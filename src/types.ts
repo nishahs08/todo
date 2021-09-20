@@ -13,3 +13,12 @@ export interface ICategory {
 	color: string;
 	id: number;
 }
+
+export interface ITagForTodo {
+	tagId: number;
+	color: string;
+}
+
+export type ITodoWithColors = Omit<ITodo, 'tags'> & {
+	tags: ITagForTodo[];
+};
