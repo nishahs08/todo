@@ -24,14 +24,26 @@ interface AddFormProps {
 	todo: ITodo;
 	setTodo: (_todo: ITodo) => void;
 }
-export const AddForm: React.FC<AddFormProps> = ({ categories, addTodo, dismissPopup, todo, setTodo, onAddClicked }) => {
-	const selectedCategories = todo.tags.reduce((types: ICategoryType[], tagId) => {
-		const matchedCategory = categories.find((category) => category.id === tagId);
-		if (matchedCategory) {
-			types.push(matchedCategory.type);
-		}
-		return types;
-	}, []);
+export const AddForm: React.FC<AddFormProps> = ({
+	categories,
+	addTodo,
+	dismissPopup,
+	todo,
+	setTodo,
+	onAddClicked,
+}) => {
+	const selectedCategories = todo.tags.reduce(
+		(types: ICategoryType[], tagId) => {
+			const matchedCategory = categories.find(
+				(category) => category.id === tagId
+			);
+			if (matchedCategory) {
+				types.push(matchedCategory.type);
+			}
+			return types;
+		},
+		[]
+	);
 
 	return (
 		<Grid container direction='column' spacing={2}>
@@ -47,13 +59,19 @@ export const AddForm: React.FC<AddFormProps> = ({ categories, addTodo, dismissPo
 				</Grid>
 			</Grid>
 			<Grid item>
-				<TextBox label='Title' value={todo.title} setValue={(title) => setTodo({ ...todo, title })} />
+				<TextBox
+					label='Title'
+					value={todo.title}
+					setValue={(title) => setTodo({ ...todo, title })}
+				/>
 			</Grid>
 			<Grid item>
 				<TextBox
 					label='Description'
 					value={todo.description}
-					setValue={(description) => setTodo({ ...todo, description })}
+					setValue={(description) =>
+						setTodo({ ...todo, description })
+					}
 				/>
 			</Grid>
 			<Grid item>
@@ -66,19 +84,30 @@ export const AddForm: React.FC<AddFormProps> = ({ categories, addTodo, dismissPo
 							selectedCategories={selectedCategories}
 							setSelectedCategories={(_selectedCategories) => {
 								const tagIds = _selectedCategories.reduce(
-									(selectedTags: number[], _selectedCategory) => {
+									(
+										selectedTags: number[],
+										_selectedCategory
+									) => {
 										const matchedCategory = categories.find(
-											(category) => category.type === _selectedCategory
+											(category) =>
+												category.type ===
+												_selectedCategory
 										);
 										if (matchedCategory) {
-											selectedTags.push(matchedCategory.id);
+											selectedTags.push(
+												matchedCategory.id
+											);
 										}
 										return selectedTags;
 									},
 									[]
 								);
 
-								setTodo({ ...todo, tags: tagIds, id: uuidv4() });
+								setTodo({
+									...todo,
+									tags: tagIds,
+									id: uuidv4(),
+								});
 							}}
 							categories={categories}
 						/>

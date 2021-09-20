@@ -1,4 +1,10 @@
-import { AppBar, Toolbar, Typography, IconButton, Theme } from '@material-ui/core';
+import {
+	AppBar,
+	Toolbar,
+	Typography,
+	IconButton,
+	Theme,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import AddIcon from '@material-ui/icons/Add';
 

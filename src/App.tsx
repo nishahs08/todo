@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import { ThemeProvider, createTheme, styled } from '@material-ui/core/styles';
-import { CssBaseline, Box, DialogContent, Dialog, useMediaQuery, useTheme, Toolbar } from '@material-ui/core';
+import {
+	CssBaseline,
+	Box,
+	DialogContent,
+	Dialog,
+	useMediaQuery,
+	useTheme,
+	Toolbar,
+} from '@material-ui/core';
 //@ts-ignore
 import AdobeClean from './fonts/AdobeClean/AdobeClean-Regular.woff';
 import { v4 as uuidv4 } from 'uuid';
@@ -34,28 +42,32 @@ const todoList = [
 	{
 		id: uuidv4(),
 		title: '11 to do bla bla bla',
-		description: 'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
+		description:
+			'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
 		done: false,
 		tags: [1, 2, 3, 4],
 	},
 	{
 		id: uuidv4(),
 		title: ' 22 to do bla bla bla',
-		description: 'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
+		description:
+			'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
 		done: false,
 		tags: [1, 2, 3],
 	},
 	{
 		id: uuidv4(),
 		title: 'to do bla bla bla',
-		description: 'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
+		description:
+			'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
 		done: false,
 		tags: [1, 2],
 	},
 	{
 		id: uuidv4(),
 		title: 'to do bla bla bla',
-		description: 'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
+		description:
+			'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
 		done: true,
 		tags: [1, 2, 3],
 	},
@@ -72,17 +84,23 @@ const Wrapper = styled(Box)({
 });
 function App() {
 	const [todos, setTodos] = useState<ITodo[]>([...todoList]);
-	const [editableTodo, setEditableTodo] = useState<ITodo | undefined>(undefined);
+	const [editableTodo, setEditableTodo] = useState<ITodo | undefined>(
+		undefined
+	);
 	const [categoryFilter, setCategoryFilter] = useState<ICategoryType>('all');
 	const [statusFilter, setStatusFilter] = useState<boolean>(false);
 	const [filteredTodos, setFilteredTodos] = useState<ITodo[]>([]);
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-	const category = categories.find((category) => categoryFilter === category.type);
+	const category = categories.find(
+		(category) => categoryFilter === category.type
+	);
 	console.log(todos);
 	const todosFilteredByCategory =
-		categoryFilter !== 'all' && category ? todos.filter((todo) => todo.tags.includes(category?.id)) : todos;
+		categoryFilter !== 'all' && category
+			? todos.filter((todo) => todo.tags.includes(category?.id))
+			: todos;
 
 	const todosFilteredByStatusAndCategory = statusFilter
 		? todosFilteredByCategory.filter((todo) => todo.done !== statusFilter)
@@ -92,7 +110,15 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
 			<Navbar
-				openAddTodo={() => setEditableTodo({ title: '', description: '', tags: [], done: false, id: uuidv4() })}
+				openAddTodo={() =>
+					setEditableTodo({
+						title: '',
+						description: '',
+						tags: [],
+						done: false,
+						id: uuidv4(),
+					})
+				}
 			/>
 
 			<Sidebar
@@ -110,7 +136,9 @@ function App() {
 							todo={editableTodo}
 							setTodo={(todo: ITodo) => setEditableTodo(todo)}
 							onAddClicked={() => {
-								const isEditMode = todos.find((todo) => todo.id === editableTodo.id);
+								const isEditMode = todos.find(
+									(todo) => todo.id === editableTodo.id
+								);
 								if (isEditMode) {
 									const newTodos = todos.map((todo) => {
 										if (todo.id === editableTodo.id) {
@@ -127,7 +155,9 @@ function App() {
 							}}
 							categories={categories}
 							dismissPopup={() => setEditableTodo(undefined)}
-							addTodo={(todo: ITodo) => setTodos([...todos, todo])}
+							addTodo={(todo: ITodo) =>
+								setTodos([...todos, todo])
+							}
 						/>
 					</DialogContent>
 				</Dialog>
@@ -141,9 +171,13 @@ function App() {
 					categories={categories}
 					setTodos={(todos) => setTodos(todos)}
 					handleEditTodo={(id) => {
-						const todoToBeEdited = todos.find((todo) => todo.id === id);
+						const todoToBeEdited = todos.find(
+							(todo) => todo.id === id
+						);
 						console.log(id, todoToBeEdited);
-						setEditableTodo(todoToBeEdited ? { ...todoToBeEdited } : undefined);
+						setEditableTodo(
+							todoToBeEdited ? { ...todoToBeEdited } : undefined
+						);
 					}}
 				/>
 			</Wrapper>

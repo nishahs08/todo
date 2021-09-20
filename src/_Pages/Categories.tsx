@@ -7,7 +7,11 @@ interface CategoriesProps {
 	color: string;
 	setActiveState: (value: string) => void;
 }
-export const Categories: React.FC<CategoriesProps> = ({ type, color, setActiveState }) => {
+export const Categories: React.FC<CategoriesProps> = ({
+	type,
+	color,
+	setActiveState,
+}) => {
 	return (
 		<>
 			<Grid

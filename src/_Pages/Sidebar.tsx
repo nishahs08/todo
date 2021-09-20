@@ -1,4 +1,13 @@
-import { Toolbar, Typography, useTheme, Drawer, Grid, Box, Theme, Hidden } from '@material-ui/core';
+import {
+	Toolbar,
+	Typography,
+	useTheme,
+	Drawer,
+	Grid,
+	Box,
+	Theme,
+	Hidden,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Categories } from './Categories';
 import { CustomCheckbox } from './CustomCheckbox';
@@ -104,7 +113,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 						anchor='left'
 						variant='permanent'
 						elevation={0}
-						classes={{ paperAnchorDockedLeft: classes.paperAnchorDockedLeft }}
+						classes={{
+							paperAnchorDockedLeft:
+								classes.paperAnchorDockedLeft,
+						}}
 					>
 						<Toolbar />
 
@@ -116,24 +128,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
 							className={classes.sidebar}
 						>
 							<Grid item>
-								<Typography onClick={() => setActiveCategory('all')}>List All</Typography>
+								<Typography
+									onClick={() => setActiveCategory('all')}
+								>
+									List All
+								</Typography>
 							</Grid>
 							{categories.map(({ color, type }, i) => (
 								<Grid
 									item
 									key={i}
-									className={activeCategory === type ? classes.selected : classes.notSelected}
+									className={
+										activeCategory === type
+											? classes.selected
+											: classes.notSelected
+									}
 								>
 									<Categories
 										color={color}
 										type={type}
 										//@ts-ignore
-										setActiveState={() => setActiveCategory(type)}
+										setActiveState={() =>
+											setActiveCategory(type)
+										}
 									/>
 								</Grid>
 							))}
 							<Grid item>
-								<CustomCheckbox label='Hide done tasks' checked={hideDone} setChecked={setHideDone} />
+								<CustomCheckbox
+									label='Hide done tasks'
+									checked={hideDone}
+									setChecked={setHideDone}
+								/>
 							</Grid>
 						</Grid>
 					</Drawer>
@@ -141,13 +167,28 @@ export const Sidebar: React.FC<SidebarProps> = ({
 			</Hidden>
 			<Hidden mdUp>
 				<Toolbar />
-				<Grid container alignItems='center' direction={media ? 'column' : 'row'} style={{ margin: '20px' }}>
+				<Grid
+					container
+					alignItems='center'
+					direction={media ? 'column' : 'row'}
+					style={{ margin: '20px' }}
+				>
 					<Grid item>
-						<Typography style={{ color: 'red' }}>List All</Typography>
+						<Typography style={{ color: 'red' }}>
+							List All
+						</Typography>
 					</Grid>
 
 					{categories.map(({ color, type }, i) => (
-						<Grid item key={i} className={activeCategory === type ? classes.selected : classes.notSelected}>
+						<Grid
+							item
+							key={i}
+							className={
+								activeCategory === type
+									? classes.selected
+									: classes.notSelected
+							}
+						>
 							<Categories
 								color={color}
 								type={type}
@@ -157,7 +198,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
 						</Grid>
 					))}
 					<Grid item>
-						<CustomCheckbox label='Hide done tasks' checked={hideDone} setChecked={setHideDone} />
+						<CustomCheckbox
+							label='Hide done tasks'
+							checked={hideDone}
+							setChecked={setHideDone}
+						/>
 					</Grid>
 				</Grid>
 			</Hidden>

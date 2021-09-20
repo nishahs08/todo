@@ -12,13 +12,20 @@ interface EditFormProps {
 	todo: ITodo;
 	setTodo: (value: ITodo) => void;
 }
-export const EditForm: React.FC<EditFormProps> = ({ categories, setOpenEdit, todo, setTodo }) => {
+export const EditForm: React.FC<EditFormProps> = ({
+	categories,
+	setOpenEdit,
+	todo,
+	setTodo,
+}) => {
 	const [selected, setSelected] = useState<ICategoryType[]>([]);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 
 	const edit = () => {
-		const tagIds = categories.filter((c) => selected.includes(c.type)).map((item) => item.id);
+		const tagIds = categories
+			.filter((c) => selected.includes(c.type))
+			.map((item) => item.id);
 		if (todo) {
 			setTodo({
 				title: title,
@@ -34,7 +41,9 @@ export const EditForm: React.FC<EditFormProps> = ({ categories, setOpenEdit, tod
 	useEffect(() => {
 		if (todo) {
 			setTitle(todo.title);
-			const tagIds = categories.filter((c) => todo.tags.includes(c.id)).map((tag) => tag.type);
+			const tagIds = categories
+				.filter((c) => todo.tags.includes(c.id))
+				.map((tag) => tag.type);
 			setSelected(tagIds);
 			setDescription(todo.description);
 		}
@@ -45,7 +54,10 @@ export const EditForm: React.FC<EditFormProps> = ({ categories, setOpenEdit, tod
 			<Grid item>
 				<Grid container justifyContent='space-between'>
 					<Grid item>
-						<CustomButton label='Cancel' onClick={() => setOpenEdit(false)} />
+						<CustomButton
+							label='Cancel'
+							onClick={() => setOpenEdit(false)}
+						/>
 					</Grid>
 					<Grid item>
 						<CustomButton label='Edit' onClick={edit} />
@@ -56,7 +68,11 @@ export const EditForm: React.FC<EditFormProps> = ({ categories, setOpenEdit, tod
 				<TextBox label='Title' value={title} setValue={setTitle} />
 			</Grid>
 			<Grid item>
-				<TextBox label='Description' value={description} setValue={setDescription} />
+				<TextBox
+					label='Description'
+					value={description}
+					setValue={setDescription}
+				/>
 			</Grid>
 			<Grid item>
 				<Grid container direction='column'>

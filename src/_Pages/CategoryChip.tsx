@@ -7,10 +7,20 @@ interface CategoryChipProps {
 	color: string;
 	onClick: (value: string) => void;
 }
-export const CategoryChip: React.FC<CategoryChipProps> = ({ type, color, onClick }) => {
+export const CategoryChip: React.FC<CategoryChipProps> = ({
+	type,
+	color,
+	onClick,
+}) => {
 	return (
 		<>
-			<Grid container spacing={1} alignItems='center' style={{ padding: '10px' }} onClick={() => onClick(type)}>
+			<Grid
+				container
+				spacing={1}
+				alignItems='center'
+				style={{ padding: '10px' }}
+				onClick={() => onClick(type)}
+			>
 				<Grid item>
 					{' '}
 					<Tag color={color} />{' '}

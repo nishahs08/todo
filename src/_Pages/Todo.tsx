@@ -1,4 +1,13 @@
-import { Grid, Card, CardHeader, CardActions, CardContent, IconButton, Menu, MenuItem } from '@material-ui/core';
+import {
+	Grid,
+	Card,
+	CardHeader,
+	CardActions,
+	CardContent,
+	IconButton,
+	Menu,
+	MenuItem,
+} from '@material-ui/core';
 import { useState } from 'react';
 import { ICategory, ITodo } from '../types';
 import { CustomCheckbox } from './CustomCheckbox';
@@ -13,10 +22,20 @@ interface TodoProps {
 	setOpenEdit: (value: boolean) => void;
 	editTodo: (value: string) => void;
 }
-export const Todo: React.FC<TodoProps> = ({ todo, key, categories, changeTodoDoneStatus, editTodo, setOpenEdit }) => {
+export const Todo: React.FC<TodoProps> = ({
+	todo,
+	key,
+	categories,
+	changeTodoDoneStatus,
+	editTodo,
+	setOpenEdit,
+}) => {
 	const [anchorEls, setAnchorEls] = useState<(null | HTMLElement)[]>([]);
 
-	const handleClick = (key: number, event: React.MouseEvent<HTMLButtonElement>) => {
+	const handleClick = (
+		key: number,
+		event: React.MouseEvent<HTMLButtonElement>
+	) => {
 		const newAnchorEls = [...anchorEls];
 		newAnchorEls[key] = event.currentTarget;
 		setAnchorEls(newAnchorEls);
@@ -29,7 +48,10 @@ export const Todo: React.FC<TodoProps> = ({ todo, key, categories, changeTodoDon
 	};
 
 	return (
-		<Card style={{ backgroundColor: '#fff9de', margin: '20px' }} key={todo.id}>
+		<Card
+			style={{ backgroundColor: '#fff9de', margin: '20px' }}
+			key={todo.id}
+		>
 			<CardHeader
 				action={
 					<IconButton
@@ -41,7 +63,9 @@ export const Todo: React.FC<TodoProps> = ({ todo, key, categories, changeTodoDon
 					</IconButton>
 				}
 				title={todo.title}
-				style={{ textDecorationLine: todo.done ? 'line-through' : 'none' }}
+				style={{
+					textDecorationLine: todo.done ? 'line-through' : 'none',
+				}}
 			/>
 			<Menu
 				id='simple-menu'
@@ -61,22 +85,34 @@ export const Todo: React.FC<TodoProps> = ({ todo, key, categories, changeTodoDon
 				<MenuItem onClick={(e) => handleClose(key)}>DELETE</MenuItem>
 			</Menu>
 
-			<CardContent style={{ textDecorationLine: todo.done ? 'line-through' : 'none' }}>
+			<CardContent
+				style={{
+					textDecorationLine: todo.done ? 'line-through' : 'none',
+				}}
+			>
 				{todo.description}
 			</CardContent>
 			<CardActions>
-				<Grid container justifyContent='space-between' alignItems='center'>
+				<Grid
+					container
+					justifyContent='space-between'
+					alignItems='center'
+				>
 					<Grid item>
 						<Grid container spacing={1}>
 							{todo.tags
 								.map((id) => {
-									const category = categories.find((category) => category.id === id);
+									const category = categories.find(
+										(category) => category.id === id
+									);
 									if (category)
 										return (
 											<>
 												<Grid item>
 													{' '}
-													<Tag color={category.color}></Tag>
+													<Tag
+														color={category.color}
+													></Tag>
 												</Grid>
 											</>
 										);
@@ -88,7 +124,9 @@ export const Todo: React.FC<TodoProps> = ({ todo, key, categories, changeTodoDon
 						<CustomCheckbox
 							label='Done'
 							checked={todo.done}
-							setChecked={(value) => changeTodoDoneStatus(value, todo.id)}
+							setChecked={(value) =>
+								changeTodoDoneStatus(value, todo.id)
+							}
 						/>
 					</Grid>
 				</Grid>

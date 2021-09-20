@@ -1,4 +1,9 @@
-import { Dialog, DialogContent, useMediaQuery, useTheme } from '@material-ui/core';
+import {
+	Dialog,
+	DialogContent,
+	useMediaQuery,
+	useTheme,
+} from '@material-ui/core';
 import { ICategory, ITodo } from '../types';
 //@ts-ignore
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
@@ -13,7 +18,13 @@ interface TodosProps {
 	setTodos: (value: ITodo[]) => void;
 	handleEditTodo: (id: string) => void;
 }
-export const Todos: React.FC<TodosProps> = ({ allTodos, todos, categories, setTodos, handleEditTodo }) => {
+export const Todos: React.FC<TodosProps> = ({
+	allTodos,
+	todos,
+	categories,
+	setTodos,
+	handleEditTodo,
+}) => {
 	const [todo, setTodo] = useState<ITodo | null>(null);
 	const [openEdit, setOpenEdit] = useState<boolean>(true);
 
@@ -60,7 +71,9 @@ export const Todos: React.FC<TodosProps> = ({ allTodos, todos, categories, setTo
 							todo={todoItem}
 							key={index}
 							categories={categories}
-							changeTodoDoneStatus={(value, id) => changeTodoDoneStatus(value, id)}
+							changeTodoDoneStatus={(value, id) =>
+								changeTodoDoneStatus(value, id)
+							}
 							editTodo={handleEditTodo}
 							setOpenEdit={setOpenEdit}
 						/>
