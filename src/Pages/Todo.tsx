@@ -1,14 +1,21 @@
-import { Grid, Card, CardHeader, CardActions, CardContent, IconButton, Menu, MenuItem, createStyles } from '@material-ui/core';
+import {
+	Grid,
+	Card,
+	CardHeader,
+	CardActions,
+	CardContent,
+	IconButton,
+	Menu,
+	MenuItem,
+	createStyles,
+} from '@material-ui/core';
 import EditBtn from '@material-ui/icons/MoreHoriz';
 import { makeStyles } from '@material-ui/styles';
 import React, { useState } from 'react';
 
-
-
 import { ITodoWithColors } from '../types';
 import { CustomCheckbox } from './CustomCheckbox';
 import { Tag } from './Tag';
-
 
 const useTodoStyles = makeStyles(() =>
 	createStyles({

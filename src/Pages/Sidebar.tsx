@@ -2,8 +2,6 @@ import { Toolbar, Typography, useTheme, Drawer, Grid, Box, Theme, Hidden } from 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/styles';
 
-
-
 import { ICategory, ICategoryType } from '../types';
 import { Categories } from './Categories';
 import { CustomCheckbox } from './CustomCheckbox';

@@ -1,9 +1,15 @@
-import { CssBaseline, Box, DialogContent, Dialog, useMediaQuery, useTheme, Toolbar } from '@material-ui/core';
+import {
+	CssBaseline,
+	Box,
+	DialogContent,
+	Dialog,
+	useMediaQuery,
+	useTheme,
+	Toolbar,
+} from '@material-ui/core';
 import { ThemeProvider, createTheme, styled } from '@material-ui/core/styles';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
-
 
 import { AddForm } from './Pages/AddForm';
 import { Navbar } from './Pages/Navbar';
@@ -12,7 +18,6 @@ import { Todos } from './Pages/Todos';
 //@ts-ignore
 import AdobeClean from './fonts/AdobeClean/AdobeClean-Regular.woff';
 import { ICategory, ICategoryType, ITagForTodo, ITodo } from './types';
-
 
 const theme = createTheme({
 	typography: {

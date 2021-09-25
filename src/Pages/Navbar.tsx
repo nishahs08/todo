@@ -2,10 +2,6 @@ import { AppBar, Toolbar, Typography, IconButton, Theme } from '@material-ui/cor
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/styles';
 
-
-
-
-
 const useStyles = makeStyles((theme: Theme) => ({
 	toolbar: {
 		justifyContent: 'space-between',
