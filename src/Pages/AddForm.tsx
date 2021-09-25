@@ -1,10 +1,13 @@
 import { Grid, Typography } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
 
+
+
 import { ICategory, ICategoryType, ITodo } from '../types';
 import { CategoriesChips } from './CategoriesChips';
 import { CustomButton } from './CustomButton';
 import { TextBox } from './TextBox';
+
 
 interface AddFormProps {
 	categories: ICategory[];
@@ -82,7 +85,6 @@ export const AddForm: React.FC<AddFormProps> = ({
 								setTodo({
 									...todo,
 									tags: tagIds,
-									id: uuidv4(),
 								});
 							}}
 							categories={categories}

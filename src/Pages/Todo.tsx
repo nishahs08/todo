@@ -1,21 +1,14 @@
-import {
-	Grid,
-	Card,
-	CardHeader,
-	CardActions,
-	CardContent,
-	IconButton,
-	Menu,
-	MenuItem,
-	createStyles,
-} from '@material-ui/core';
+import { Grid, Card, CardHeader, CardActions, CardContent, IconButton, Menu, MenuItem, createStyles } from '@material-ui/core';
 import EditBtn from '@material-ui/icons/MoreHoriz';
 import { makeStyles } from '@material-ui/styles';
 import React, { useState } from 'react';
 
+
+
 import { ITodoWithColors } from '../types';
 import { CustomCheckbox } from './CustomCheckbox';
 import { Tag } from './Tag';
+
 
 const useTodoStyles = makeStyles(() =>
 	createStyles({
@@ -37,11 +30,17 @@ const useTodoStyles = makeStyles(() =>
 
 interface TodoProps {
 	todo: ITodoWithColors;
-	onEditTodoClicked: (value: string) => void;
+	onDeleteTodoClicked: (todoId: string) => void;
+	onEditTodoClicked: (todoId: string) => void;
 	onTodoStatusChanged: (todoId: string, status: boolean) => void;
 }
 
-export const Todo: React.FC<TodoProps> = ({ todo, onTodoStatusChanged, onEditTodoClicked }) => {
+export const Todo: React.FC<TodoProps> = ({
+	todo,
+	onDeleteTodoClicked,
+	onTodoStatusChanged,
+	onEditTodoClicked,
+}) => {
 	const classes = useTodoStyles();
 	const [menuRef, setMenuRef] = useState<null | HTMLElement>(null);
 	const openTodoMenu = (target: HTMLElement) => setMenuRef(target);
@@ -51,7 +50,10 @@ export const Todo: React.FC<TodoProps> = ({ todo, onTodoStatusChanged, onEditTod
 		closeTodoMenu();
 		onEditTodoClicked(todo.id);
 	};
-	const deleteTodo = () => closeTodoMenu();
+	const deleteTodo = () => {
+		closeTodoMenu();
+		onDeleteTodoClicked(todo.id);
+	};
 
 	const CardHeaderOptions = (
 		<IconButton onClick={(e) => openTodoMenu(e.currentTarget)}>

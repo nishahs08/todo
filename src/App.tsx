@@ -8,6 +8,7 @@ import {
 	Toolbar,
 } from '@material-ui/core';
 import { ThemeProvider, createTheme, styled } from '@material-ui/core/styles';
+import { useLocalStorage } from '@rehooks/local-storage';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -39,41 +40,6 @@ const categories: ICategory[] = [
 	{ id: 4, type: 'family', color: '#daf2d6' },
 ];
 
-const todoList = [
-	{
-		id: uuidv4(),
-		title: '11 to do bla bla bla',
-		description:
-			'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
-		done: false,
-		tags: [1, 2, 3, 4],
-	},
-	{
-		id: uuidv4(),
-		title: ' 22 to do bla bla bla',
-		description:
-			'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
-		done: false,
-		tags: [1, 2, 3],
-	},
-	{
-		id: uuidv4(),
-		title: 'to do bla bla bla',
-		description:
-			'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
-		done: false,
-		tags: [1, 2],
-	},
-	{
-		id: uuidv4(),
-		title: 'to do bla bla bla',
-		description:
-			'skjdhfkj sdkhgkhg dhgdhgl dghdhg dhghsdkhg kjdhgsoiug sdfpsoudtg sl;edfpouspd;ajufrp',
-		done: true,
-		tags: [1, 2, 3],
-	},
-];
-
 const drawerWidth = 250;
 const Wrapper = styled(Box)({
 	marginLeft: `${drawerWidth}px`,
@@ -87,7 +53,7 @@ function App() {
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-	const [todos, setTodos] = useState<ITodo[]>([...todoList]);
+	const [todos, setTodos] = useLocalStorage<ITodo[]>('todos', []);
 	const [editableTodo, setEditableTodo] = useState<ITodo | undefined>(undefined);
 	const [categoryFilter, setCategoryFilter] = useState<ICategoryType>('all');
 	const [statusFilter, setStatusFilter] = useState<boolean>(false);
@@ -178,6 +144,9 @@ function App() {
 				<Toolbar />
 				<Todos
 					todos={todosFilteredByStatusAndCategory}
+					onDeleteTodoClicked={(todoId) => {
+						setTodos(todos.filter((todo) => todo.id !== todoId));
+					}}
 					onEditTodoClicked={(todoId) => {
 						const todoToBeEdited = todos.find((todo) => todo.id === todoId);
 						setEditableTodo(todoToBeEdited ? { ...todoToBeEdited } : undefined);
